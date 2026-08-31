@@ -134,7 +134,7 @@ if (musicBtn) {
 
 const ConfettiEngine = (function () {
   const canvas = document.getElementById('confetti-canvas');
-  if (!canvas) return { shoot: () => { } };
+  if (!canvas) return { shoot: () => {} };
   const ctx = canvas.getContext('2d');
   let W = (canvas.width = window.innerWidth);
   let H = (canvas.height = window.innerHeight);
@@ -236,7 +236,7 @@ const indicatorDots = document.querySelectorAll('.indicator-dot');
 
 window.goToSlide = function (targetIndex) {
   if (targetIndex < 0 || targetIndex >= slides.length) return;
-
+  
   slides.forEach((s, idx) => {
     s.classList.remove('active', 'previous');
     if (idx < targetIndex) s.classList.add('previous');
@@ -253,16 +253,16 @@ window.goToSlide = function (targetIndex) {
 };
 
 
-// ─── 4. SLIDE 1: DISTINCT STEP-BY-STEP GUSSA METER (EVERY TAP IS UNIQUE!) ───
+// ─── 4. SLIDE 1: DISTINCT STEP-BY-STEP GUSSA METER ───
 let gussaStep = 0; // 0 -> 1 -> 2 -> 3 -> 4 (Finished)
 
 const gussaStepsData = [
   // Initial state (Step 0)
   {
-    percent: 100,
-    valText: '100% (Extreme Danger 🚨)',
-    caption: 'Arey re! Itna zyada gussa?!',
-    btnText: 'Thoda Rahem Karo Bacchi🥺'
+    percent: 99,
+    valText: '99% (Baapre! Itna Khatarnak😣)',
+    caption: 'Kya karoge iss bacche pe itna gussa karke 🥺',
+    btnText: 'Gussa Thanda Karlo Aap🙃'
   },
   // After Tap 1 (Step 1)
   {
@@ -276,7 +276,7 @@ const gussaStepsData = [
     percent: 50,
     valText: '50% (Pout Mode Activated 😤)',
     caption: 'abhi bhi gussa bacha hai...lagta hai momos aur ice-cream khilane padenge! 🥟🍦',
-    btnText: 'Kam kar lo na betu 😣 '
+    btnText: 'Kam kar lo na betu 😣'
   },
   // After Tap 3 (Step 3)
   {
@@ -289,8 +289,8 @@ const gussaStepsData = [
   {
     percent: 0,
     valText: '0% (Totally Calm & In Love 🍯🥰)',
-    caption: 'Chalo Shaant toh hue aap 💖',
-    btnText: 'HEHE, meri cutiepie'
+    caption: 'Chalo Shaant toh hue aap 💖 Ab aage dekhein aapke surprises!',
+    btnText: 'HEHE, meri cutiepie! Aage Dekho 👉'
   }
 ];
 
@@ -334,87 +334,88 @@ if (gussaTrack) {
 }
 
 
-// ─── 5. SLIDE 2: POLAROIDS CAROUSEL (WITH SLEEPYHEAD FOODIE CARD) ───
-(function initPolaroids() {
-  const polaroids = [
-    {
-      title: 'The Drama Queen 👑',
-      desc: 'Jab aap gussa hoti ho toh aapse dar bhi lagta hai aur aap cute bhi😋!',
-      img: 'https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif'
-    },
-    {
-      title: 'Sotlu Bacchi😴🍕',
-      desc: 'Din bhar bas neend hi toh ghumti hai aapke dimaag mein! Neend aur khane ke baad meri baari aati hai 😏',
-      img: 'https://media.tenor.com/8NdKLwX37kAAAAAm/dudu-sleep-dudu-bubu.webp'
-    },
-    {
-      title: 'Supreme Court Judge ⚖️',
-      desc: 'Chahe galti kisi ki bhi ho, last me jeetna toh aapko hi hai bhutki shahiba! 😌',
-      img: 'https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp'
-    },
-    {
-      title: 'Meri Laado 💞',
-      desc: 'Chahe kitni bhi ladai ho jaye, I still hate you the most in the entire world! 💖',
-      img: 'https://media.tenor.com/Zrr4L_Wd4JkAAAAi/bubu-rub-bubu-love-dudu.gif'
-    }
-  ];
+// ─── 5. SLIDE 2: POLAROIDS CAROUSEL ───
+const polaroids = [
+  {
+    title: 'The Drama Queen 👑',
+    desc: 'Jab aap gussa hoti ho toh aapse dar bhi lagta hai aur aap cute bhi😋!',
+    img: 'https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif'
+  },
+  {
+    title: 'Sotlu Bacchi😴🍕',
+    desc: 'Din bhar bas neend hi toh ghumti hai aapke dimaag mein! Neend aur khane ke baad meri baari aati hai 😏',
+    img: 'https://media.tenor.com/8NdKLwX37kAAAAAm/dudu-sleep-dudu-bubu.webp'
+  },
+  {
+    title: 'Supreme Court Judge ⚖️',
+    desc: 'Chahe galti kisi ki bhi ho, last me jeetna toh aapko hi hai bhutki shahiba! 😌',
+    img: 'https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp'
+  },
+  {
+    title: 'Meri Laado 💞',
+    desc: 'Chahe kitni bhi ladai ho jaye, I still hate you the most in the entire world! 💖',
+    img: 'https://media.tenor.com/Zrr4L_Wd4JkAAAAi/bubu-rub-bubu-love-dudu.gif'
+  }
+];
 
-  let pIndex = 0;
+let pIndex = 0;
+function renderPolaroid() {
   const polaroidImg = document.getElementById('polaroidImg');
   const polaroidTitle = document.getElementById('polaroidTitle');
   const polaroidDesc = document.getElementById('polaroidDesc');
   const polaroidCount = document.getElementById('polaroidCount');
-  const btnPrev = document.getElementById('btnPrevPolaroid');
-  const btnNext = document.getElementById('btnNextPolaroid');
+  
+  if (!polaroidImg || !polaroidTitle || !polaroidDesc) return;
+  const item = polaroids[pIndex];
+  polaroidImg.src = item.img;
+  polaroidTitle.textContent = item.title;
+  polaroidDesc.textContent = item.desc;
+  if (polaroidCount) polaroidCount.textContent = `${pIndex + 1} / ${polaroids.length}`;
+}
 
-  function renderPolaroid() {
-    const item = polaroids[pIndex];
-    polaroidImg.src = item.img;
-    polaroidTitle.textContent = item.title;
-    polaroidDesc.textContent = item.desc;
-    polaroidCount.textContent = `${pIndex + 1} / ${polaroids.length}`;
+const btnPrev = document.getElementById('btnPrevPolaroid');
+const btnNext = document.getElementById('btnNextPolaroid');
+if (btnPrev && btnNext) {
+  btnPrev.addEventListener('click', () => {
+    pIndex = (pIndex - 1 + polaroids.length) % polaroids.length;
+    renderPolaroid();
     CuteAudio.playCutePop();
+  });
+  btnNext.addEventListener('click', () => {
+    pIndex = (pIndex + 1) % polaroids.length;
+    renderPolaroid();
+    CuteAudio.playCutePop();
+  });
+}
+renderPolaroid();
+
+
+// ─── 6. SLIDE 3: LOVE COUPONS ───
+const coupons = [
+  {
+    icon: '👑',
+    title: 'Chalo Aap Jiti',
+    desc: 'Valid especially for today. Jo bologe woh sar aankhon par! Koi behes nahi.'
+  },
+  {
+    icon: '🫂',
+    title: 'Cutiepie Accessibility',
+    desc: 'Whenever you are sad, angry, or just want warmth. Non-stop tight cuddles!(Iski mereko jyada jarurat hai btw 🫣)'
+  },
+  {
+    icon: '🍦',
+    title: 'Ghumne Chalna Hai',
+    desc: "Let's plan, itna dur mat rakh mereko 😾"
+  },
+  {
+    icon: '💆‍♀️',
+    title: 'Head Massage & Pampering Champi',
+    desc: 'Meri Teraf se thodi si helping 😁'
   }
+];
 
-  if (btnPrev && btnNext) {
-    btnPrev.addEventListener('click', () => {
-      pIndex = (pIndex - 1 + polaroids.length) % polaroids.length;
-      renderPolaroid();
-    });
-    btnNext.addEventListener('click', () => {
-      pIndex = (pIndex + 1) % polaroids.length;
-      renderPolaroid();
-    });
-  }
-})();
-
-
-// ─── 6. SLIDE 3: LOVE COUPONS (FORCED CARD-BY-CARD ACCEPTANCE FOR BACCHI) ───
-(function initCouponsDeck() {
-  const coupons = [
-    {
-      icon: '👑',
-      title: "Chalo Aap Jiti",
-      desc: 'Valid especially for today. Jo bologe woh sar aankhon par! Koi behes nahi.'
-    },
-    {
-      icon: '🫂',
-      title: 'Cutiepie Accessibility',
-      desc: 'Whenever you are sad, angry, or just want warmth. Non-stop tight cuddles!(Iski mereko jyada jarurat hai btw 🫣)'
-    },
-    {
-      icon: '🍦',
-      title: 'Ghumne Chalna Hai',
-      desc: "Let's plan, itna dur mat rakh mereko 😾"
-    },
-    {
-      icon: '💆‍♀️',
-      title: 'Head Massage & Pampering Champi',
-      desc: 'Meri Teraf se thodi si helping 😁'
-    }
-  ];
-
-  let cIndex = 0;
+let cIndex = 0;
+function showCoupon(index) {
   const cardEl = document.getElementById('currentCouponCard');
   const iconEl = document.getElementById('couponIcon');
   const titleEl = document.getElementById('couponTitle');
@@ -422,42 +423,46 @@ if (gussaTrack) {
   const btnAccept = document.getElementById('btnAcceptCoupon');
   const stampEl = document.getElementById('couponStamp');
   const progressEl = document.getElementById('couponProgress');
+
+  if (!cardEl || !iconEl || !titleEl || !descEl) return;
+  const item = coupons[index];
+  iconEl.textContent = item.icon;
+  titleEl.textContent = item.title;
+  descEl.textContent = item.desc;
+  if (progressEl) progressEl.textContent = `Coupon ${index + 1} of ${coupons.length}`;
+
+  if (btnAccept) btnAccept.style.display = 'block';
+  if (stampEl) stampEl.style.display = 'none';
+  cardEl.classList.remove('stamped');
+}
+
+window.acceptCurrentCoupon = function () {
+  const cardEl = document.getElementById('currentCouponCard');
+  const btnAccept = document.getElementById('btnAcceptCoupon');
+  const stampEl = document.getElementById('couponStamp');
+  const progressEl = document.getElementById('couponProgress');
   const btnAfterCoupons = document.getElementById('btnAfterCoupons');
 
-  function showCoupon(index) {
-    const item = coupons[index];
-    iconEl.textContent = item.icon;
-    titleEl.textContent = item.title;
-    descEl.textContent = item.desc;
-    progressEl.textContent = `Coupon ${index + 1} of ${coupons.length}`;
+  btnAccept.style.display = 'none';
+  stampEl.style.display = 'inline-block';
+  cardEl.classList.add('stamped');
+  
+  CuteAudio.playSlamSound();
+  ConfettiEngine.shoot(45);
 
-    btnAccept.style.display = 'block';
-    stampEl.style.display = 'none';
-    cardEl.classList.remove('stamped');
-  }
+  setTimeout(() => {
+    if (cIndex < coupons.length - 1) {
+      cIndex++;
+      showCoupon(cIndex);
+    } else {
+      progressEl.innerHTML = '🎉 <strong>Maan liya na sab kuch! 🥰</strong>';
+      if (btnAfterCoupons) btnAfterCoupons.style.display = 'inline-flex';
+      ConfettiEngine.shoot(80);
+    }
+  }, 900);
+};
 
-  window.acceptCurrentCoupon = function () {
-    btnAccept.style.display = 'none';
-    stampEl.style.display = 'inline-block';
-    cardEl.classList.add('stamped');
-
-    CuteAudio.playSlamSound();
-    ConfettiEngine.shoot(45);
-
-    setTimeout(() => {
-      if (cIndex < coupons.length - 1) {
-        cIndex++;
-        showCoupon(cIndex);
-      } else {
-        progressEl.innerHTML = '🎉 <strong>All 4 Coupons Accepted by Bacchi!</strong>';
-        btnAfterCoupons.style.display = 'inline-flex';
-        ConfettiEngine.shoot(80);
-      }
-    }, 900);
-  };
-
-  showCoupon(0);
-})();
+showCoupon(0);
 
 
 // ─── 7. SLIDE 4: FORGIVENESS GAME WITH EVADING "NAHI" & "ITNI JALDI?!" TEASE ───
@@ -514,7 +519,6 @@ if (gussaTrack) {
   btnNo.addEventListener('touchstart', evadeNoButton);
   btnNo.addEventListener('click', evadeNoButton);
 
-  // Yes Button Click (First time: Tease modal!)
   btnYes.addEventListener('click', () => {
     if (!hasTeasedOnce) {
       hasTeasedOnce = true;
