@@ -253,57 +253,61 @@ window.goToSlide = function (targetIndex) {
 };
 
 
-// ─── 4. SLIDE 1: GUSSA METER LOGIC ───
-(function initGussaMeter() {
+// ─── 4. SLIDE 1: UNIFIED TRANSFORMING GUSSA METER BUTTON ───
+let gussaLevel = 99;
+
+window.handleGussaClick = function () {
+  const btn = document.getElementById('btnCoolDown');
   const gussaVal = document.getElementById('gussaVal');
   const gussaFill = document.getElementById('gussaFill');
   const gussaCaption = document.getElementById('gussaCaption');
-  const btnCoolDown = document.getElementById('btnCoolDown');
-  const gussaTrack = document.getElementById('gussaTrack');
   const heroBubuImg = document.getElementById('heroBubuImg');
-  const calmRevealBox = document.getElementById('calmRevealBox');
 
-  let currentLevel = 99;
+  if (gussaLevel > 0) {
+    // Decrease anger step
+    gussaLevel = Math.max(0, gussaLevel - 25);
+    gussaFill.style.width = gussaLevel + '%';
 
-  const captions = [
-    { min: 80, text: 'Arey re! Gussa thanda karne ke liye button dabao! 👇', valText: '99% (Danger Zone 🚨)' },
-    { min: 50, text: 'Thoda kam hua... par abhi bhi dangerous hai! Ek baar aur tap karo! 🧊', valText: '65% (High Alert ⚠️)' },
-    { min: 25, text: '50% gussa bacha hai... momos ya ice-cream khilaun kya? 🍦', valText: '40% (Cooling Down 🍧)' },
-    { min: 1, text: 'Almost shaant! Bas ek smile bachi hai meri bacchi 😊', valText: '15% (Almost Sweet 🌸)' },
-    { min: 0, text: '🎉 0% GUSSA! Full Pyar Mode Activated! 💖🥰', valText: '0% (Totally Sweet & Calm 🍯)' },
-  ];
+    CuteAudio.playCutePop();
+    ConfettiEngine.shoot(25);
 
-  function updateDisplay() {
-    gussaFill.style.width = currentLevel + '%';
-    const match = captions.find(c => currentLevel >= c.min);
-    if (match) {
-      gussaVal.textContent = match.valText;
-      gussaCaption.textContent = match.text;
-    }
+    if (gussaLevel >= 75) {
+      gussaVal.textContent = '75% (High Alert ⚠️)';
+      gussaCaption.textContent = 'Thoda kam hua... par abhi bhi dangerous hai! Ek baar aur tap karo! 🧊';
+      btn.textContent = '🧊 Aur Thanda Karo (Tap Again!)';
+    } else if (gussaLevel >= 50) {
+      gussaVal.textContent = '50% (Cooling Down 🍧)';
+      gussaCaption.textContent = '50% gussa bacha hai... momos ya ice-cream khilaun kya? 🍦';
+      btn.textContent = '🧊 Thoda Aur Dabaao (50% Left)';
+    } else if (gussaLevel > 0) {
+      gussaVal.textContent = '25% (Almost Sweet 🌸)';
+      gussaCaption.textContent = 'Almost shaant! Bas ek smile bachi hai meri bacchi 😊';
+      btn.textContent = '🧊 Ek Last Baar Tap Karo! 🌸';
+    } else {
+      // 0% REACHED — Transform button into "Aage Dekho 👉"
+      gussaVal.textContent = '0% (Totally Calm & Sweet 🍯)';
+      gussaCaption.textContent = '🎉 YAAAY! Gussa 0% Ho Gaya! Now ready for surprises! 🥰';
+      
+      btn.textContent = '🎉 Gussa 0%! Aage Dekho 👉';
+      btn.classList.add('btn-unlocked-next');
 
-    if (currentLevel === 0) {
-      btnCoolDown.style.display = 'none';
-      calmRevealBox.style.display = 'block';
       if (heroBubuImg) {
         heroBubuImg.src = 'https://media1.tenor.com/m/q_Sav516k1IAAAAC/bubu-dudu-dudu-dancing.gif';
       }
-      ConfettiEngine.shoot(70);
+      
+      ConfettiEngine.shoot(80);
       CuteAudio.playCutePop();
     }
+  } else {
+    // When clicked after reaching 0%, navigate directly to Slide 2!
+    goToSlide(1);
   }
+};
 
-  function reduceAnger() {
-    if (currentLevel > 0) {
-      currentLevel = Math.max(0, currentLevel - 25);
-      updateDisplay();
-      CuteAudio.playCutePop();
-      ConfettiEngine.shoot(25);
-    }
-  }
-
-  if (btnCoolDown) btnCoolDown.addEventListener('click', reduceAnger);
-  if (gussaTrack) gussaTrack.addEventListener('click', reduceAnger);
-})();
+const gussaTrack = document.getElementById('gussaTrack');
+if (gussaTrack) {
+  gussaTrack.addEventListener('click', window.handleGussaClick);
+}
 
 
 // ─── 5. SLIDE 2: POLAROIDS CAROUSEL (WITH SLEEPYHEAD FOODIE CARD) ───
@@ -403,14 +407,12 @@ window.goToSlide = function (targetIndex) {
     descEl.textContent = item.desc;
     progressEl.textContent = `Coupon ${index + 1} of ${coupons.length}`;
 
-    // Reset button & stamp state
     btnAccept.style.display = 'block';
     stampEl.style.display = 'none';
     cardEl.classList.remove('stamped');
   }
 
   window.acceptCurrentCoupon = function () {
-    // Show stamp & sound
     btnAccept.style.display = 'none';
     stampEl.style.display = 'inline-block';
     cardEl.classList.add('stamped');
@@ -423,7 +425,6 @@ window.goToSlide = function (targetIndex) {
         cIndex++;
         showCoupon(cIndex);
       } else {
-        // All coupons accepted!
         progressEl.innerHTML = '🎉 <strong>All 4 Coupons Accepted by Bacchi!</strong>';
         btnAfterCoupons.style.display = 'inline-flex';
         ConfettiEngine.shoot(80);
@@ -500,7 +501,6 @@ window.goToSlide = function (targetIndex) {
     }
   });
 
-  // Modal Real Forgive Button Click
   if (btnRealForgive) {
     btnRealForgive.addEventListener('click', () => {
       teaseModal.classList.remove('active');
