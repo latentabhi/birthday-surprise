@@ -472,10 +472,10 @@ let isThrottled = false;
 let currentZoneIndex = -1;
 
 const escapePositions = [
-  { x: -95, y: -30, rot: -8 },
-  { x: 95, y: 30, rot: 8 },
-  { x: -95, y: 30, rot: 6 },
-  { x: 95, y: -30, rot: -6 },
+  { x: -95, y: -32, rot: -8 },
+  { x: 95, y: 32, rot: 8 },
+  { x: -95, y: 32, rot: 6 },
+  { x: 95, y: -32, rot: -6 },
   { x: -105, y: 0, rot: -10 },
   { x: 105, y: 0, rot: 10 },
   { x: 0, y: -36, rot: 4 },
@@ -522,7 +522,7 @@ function evadeNoButton(e) {
 
   const scales = [1.08, 1.15, 1.22, 1.28];
   const targetScale = scales[Math.min(noCount - 1, scales.length - 1)];
-  btnYes.style.transform = `scale(${targetScale})`;
+  btnYes.style.transform = `translateX(-62px) scale(${targetScale})`;
 
   CuteAudio.playCutePop();
 }
@@ -560,7 +560,8 @@ function triggerFinalCelebration() {
   const btnRealForgive = document.getElementById('btnRealForgive');
 
   if (!btnYes || !btnNo) return;
-  btnNo.style.transform = 'translate(78px, 0px)';
+  btnYes.style.transform = 'translateX(-62px)';
+  btnNo.style.transform = 'translateX(62px)';
 
   btnNo.addEventListener('pointerenter', evadeNoButton);
   btnNo.addEventListener('touchstart', evadeNoButton, { passive: false });
@@ -617,7 +618,7 @@ window.restartStory = function () {
   const btnAfterCoupons = document.getElementById('btnAfterCoupons');
   if (btnAfterCoupons) btnAfterCoupons.style.display = 'none';
 
-  // 4. Reset Slide 4: Apology & Tease Game
+  // 4. Reset Slide 4: Apology & Tease Game Side-by-Side
   const buttonsArena = document.getElementById('buttonsArenaMobile');
   const tauntBubble = document.getElementById('tauntBubbleMobile');
   const celebrationBox = document.getElementById('celebrationBoxMobile');
@@ -637,9 +638,9 @@ window.restartStory = function () {
   if (apologySub) apologySub.style.display = 'block';
   if (celebrationBox) celebrationBox.style.display = 'none';
   if (apologyGif) apologyGif.src = 'https://media1.tenor.com/m/wDR4aS0xUmkAAAAC/dudu-bubu.gif';
-  if (btnYes) btnYes.style.transform = 'scale(1)';
+  if (btnYes) btnYes.style.transform = 'translateX(-62px) scale(1)';
   if (btnNo) {
-    btnNo.style.transform = 'translate(78px, 0px)';
+    btnNo.style.transform = 'translateX(62px)';
     btnNo.style.backgroundColor = '#ffffff';
   }
   if (teaseModal) teaseModal.classList.remove('active');

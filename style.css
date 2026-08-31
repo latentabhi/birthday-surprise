@@ -564,7 +564,7 @@ body {
   margin-top: 0.4rem;
 }
 
-/* ─── SLIDE 4: OPTIMIZED MOBILE APOLOGY & EVASIVE BUTTON ─── */
+/* ─── SLIDE 4: OPTIMIZED SIDE-BY-SIDE BUTTONS & EVASIVE DODGING ─── */
 .apology-gif-mobile {
   width: 125px;
   height: 125px;
@@ -576,7 +576,7 @@ body {
 .buttons-arena-mobile {
   position: relative;
   width: 100%;
-  min-height: 105px;
+  height: 110px;
   margin-top: 0.6rem;
   display: flex;
   justify-content: center;
@@ -589,7 +589,7 @@ body {
   font-family: var(--font-hand);
   font-size: 1.65rem;
   font-weight: 700;
-  padding: 0.65rem 1.9rem;
+  padding: 0.65rem 1.8rem;
   border-radius: 999px;
   border: none;
   cursor: pointer;
@@ -599,6 +599,7 @@ body {
   touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
+  transform: translateX(-62px);
 }
 
 .btn-forgive-no-m {
@@ -606,9 +607,9 @@ body {
   background: #ffffff;
   color: #ff477e;
   font-family: var(--font-hand);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 700;
-  padding: 0.55rem 1.5rem;
+  padding: 0.55rem 1.6rem;
   border-radius: 999px;
   border: 2px dashed #ff477e;
   cursor: pointer;
@@ -619,6 +620,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
   white-space: nowrap;
+  transform: translateX(62px);
 }
 
 .taunt-bubble-m {
