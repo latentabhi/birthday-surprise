@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Happy Birthday Meri Jaan! 🎂💖</title>
-  <meta name="description" content="A cute mobile birthday story for my Bacchi — Bubu Dudu, interactive coupons, gussa meter & heartfelt apologies." />
+  <meta name="description"
+    content="A cute mobile birthday story for my Bacchi — Bubu Dudu, interactive coupons, gussa meter & heartfelt apologies." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Gaegu:wght@700&family=Patrick+Hand&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Gaegu:wght@700&family=Patrick+Hand&family=Quicksand:wght@500;600;700;800&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=3.2" />
 
   <style>
@@ -37,14 +41,17 @@
       --radius-md: 14px;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -54,7 +61,7 @@
     body {
       font-family: var(--font-body);
       background-color: var(--bg-pink);
-      background-image: 
+      background-image:
         radial-gradient(#ffccd5 1.5px, transparent 1.5px),
         radial-gradient(#ffd1dc 1.5px, var(--bg-pink) 1.5px);
       background-size: 28px 28px;
@@ -95,10 +102,23 @@
     }
 
     @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-      15% { opacity: 0.6; }
-      85% { opacity: 0.6; }
-      100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.6;
+      }
+
+      85% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-105vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .top-app-bar {
@@ -156,8 +176,15 @@
     }
 
     @keyframes pulseMusic {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
     }
 
     .deck-container {
@@ -230,9 +257,9 @@
       width: 100px;
       height: 20px;
       background: rgba(255, 182, 193, 0.85);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-      border-left: 2px dashed rgba(255,255,255,0.8);
-      border-right: 2px dashed rgba(255,255,255,0.8);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+      border-left: 2px dashed rgba(255, 255, 255, 0.8);
+      border-right: 2px dashed rgba(255, 255, 255, 0.8);
       z-index: 5;
     }
 
@@ -255,14 +282,22 @@
       animation: pulseNext 2s infinite;
     }
 
-    .btn-next-step:hover, .btn-next-step:active {
+    .btn-next-step:hover,
+    .btn-next-step:active {
       transform: scale(1.05) translateY(-2px);
       box-shadow: 0 10px 24px rgba(255, 71, 126, 0.45);
     }
 
     @keyframes pulseNext {
-      0%, 100% { box-shadow: 0 8px 20px rgba(255, 71, 126, 0.35); }
-      50% { box-shadow: 0 12px 28px rgba(255, 71, 126, 0.6); }
+
+      0%,
+      100% {
+        box-shadow: 0 8px 20px rgba(255, 71, 126, 0.35);
+      }
+
+      50% {
+        box-shadow: 0 12px 28px rgba(255, 71, 126, 0.6);
+      }
     }
 
     .badge-pill-small {
@@ -288,8 +323,15 @@
     }
 
     @keyframes cuteBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     .slide-title {
@@ -401,7 +443,7 @@
       background: white;
       padding: 0.75rem 0.75rem 0.9rem 0.75rem;
       border-radius: 10px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
       border: 1px solid #f0e0e5;
       position: relative;
       text-align: center;
@@ -545,8 +587,15 @@
     }
 
     @keyframes stampSlam {
-      0% { transform: scale(2) rotate(-15deg); opacity: 0; }
-      100% { transform: scale(1.05) rotate(-3deg); opacity: 1; }
+      0% {
+        transform: scale(2) rotate(-15deg);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1.05) rotate(-3deg);
+        opacity: 1;
+      }
     }
 
     .coupon-progress-text {
@@ -675,7 +724,7 @@
       padding: 1.6rem 1.3rem;
       text-align: center;
       position: relative;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
       transform: scale(0.85);
       transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -726,12 +775,10 @@
       border-radius: var(--radius-lg);
       padding: 1.3rem 1rem;
       text-align: left;
-      background-image: repeating-linear-gradient(
-        transparent,
-        transparent 26px,
-        #ffe8ee 26px,
-        #ffe8ee 28px
-      );
+      background-image: repeating-linear-gradient(transparent,
+          transparent 26px,
+          #ffe8ee 26px,
+          #ffe8ee 28px);
       line-height: 28px;
       width: 100%;
     }
@@ -776,6 +823,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Confetti Canvas -->
@@ -806,28 +854,29 @@
       <div class="mobile-card">
         <div class="washi-tape-top"></div>
         <div class="badge-pill-small">✨ Special Birthday Surprise ✨</div>
-        
-        <img src="https://media.tenor.com/Qj40AdvEqKsAAAAi/bubu-happy.gif" alt="Bubu Birthday" class="hero-bubu-img" id="heroBubuImg" />
-        
-        <h1 class="slide-title">Happy Birthday Meri Jaan! 🎂💖</h1>
+
+        <img src="https://media.tenor.com/Qj40AdvEqKsAAAAi/bubu-happy.gif" alt="Bubu Birthday" class="hero-bubu-img"
+          id="heroBubuImg" />
+
+        <h1 class="slide-title">Happy Birthday Meri Betu! 🎂💖</h1>
         <p class="slide-sub">
-          I know thoda gussa ho mere se... par aaj tumhara birthday hai! Ek chhota sa gift tumhare liye 👇
+          I know thoda gussa hai mere se... par aaj aapka birthday hai toh ek chhota sa gift aapke liye
         </p>
 
         <!-- Interactive Gussa Meter -->
         <div class="gussa-box-mobile">
           <div class="gussa-header-mobile">
             <span>🌡️ Gussa Level:</span>
-            <span class="gussa-val-text" id="gussaVal">99% (Danger Zone 🚨)</span>
+            <span class="gussa-val-text" id="gussaVal">99% (Baapre! Itna Khatarnak😣)</span>
           </div>
           <div class="gussa-track-mobile" id="gussaTrack" title="Tap to reduce anger!">
             <div class="gussa-fill-mobile" id="gussaFill"></div>
           </div>
-          <div class="gussa-caption-mobile" id="gussaCaption">Arey re! Gussa thanda karne ke liye button dabao! 👇</div>
-          
+          <div class="gussa-caption-mobile" id="gussaCaption">Kya karoge iss bacche pe itna gussa karke 🥺</div>
+
           <!-- Unified Single Button that cools down anger and transforms into Aage Dekho -->
           <button class="btn-cool-down-mobile" id="btnCoolDown" onclick="handleGussaClick()">
-            🧊 Gussa Thanda Karo (Tap Here!)
+            Gussa Thanda Karlo Aap🙃
           </button>
         </div>
       </div>
@@ -838,15 +887,17 @@
       <div class="mobile-card">
         <div class="washi-tape-top"></div>
         <div class="badge-pill-small">📸 Kuch Kadwe-Meethe Sach</div>
-        <h2 class="slide-title">Things About You I Love! 😂💖</h2>
-        
+        <h2 class="slide-title">Things About You I Hate! 💖</h2>
+
         <div class="polaroid-carousel-wrap">
           <div class="polaroid-single-card" id="polaroidCard">
             <div class="polaroid-img-box">
-              <img src="https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif" alt="Polaroid Memory" id="polaroidImg" />
+              <img src="https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif" alt="Polaroid Memory"
+                id="polaroidImg" />
             </div>
             <h3 class="polaroid-title-text" id="polaroidTitle">The Drama Queen 👑</h3>
-            <p class="polaroid-desc-text" id="polaroidDesc">Jab tum gussa hoti ho toh darr bhi lagta hai aur tum cute bhi lagti ho! 😂</p>
+            <p class="polaroid-desc-text" id="polaroidDesc">Jab tum gussa hoti ho toh darr bhi lagta hai aur tum cute
+              bhi lagti ho! 😂</p>
           </div>
 
           <div class="polaroid-nav-btns">
@@ -856,7 +907,7 @@
           </div>
         </div>
 
-        <button class="btn-next-step" onclick="goToSlide(2)">Bacchi Ke Passes 🎟️👉</button>
+        <button class="btn-next-step" onclick="goToSlide(2)">Bacchi Ke Passes 🫣</button>
       </div>
     </section>
 
@@ -864,8 +915,8 @@
     <section class="slide" id="slide3">
       <div class="mobile-card">
         <div class="washi-tape-top"></div>
-        <div class="badge-pill-small">🎟️ Birthday Special Passes</div>
-        <h2 class="slide-title">Love Coupons For You! 🎁</h2>
+        <div class="badge-pill-small">✨Birthday Special Passes</div>
+        <h2 class="slide-title">Hate Coupons For You! 😋</h2>
         <p class="slide-sub">You have to accept all 4 coupons one by one! (No skipping 😜)</p>
 
         <div class="coupon-deck-wrap">
@@ -873,16 +924,17 @@
             <div class="coupon-big-icon" id="couponIcon">👑</div>
             <h3 class="coupon-big-title" id="couponTitle">"You Win Every Argument" Pass</h3>
             <p class="coupon-big-desc" id="couponDesc">Valid especially for today. Jo bologe woh sar aankhon par!</p>
-            
-            <button class="btn-force-accept" id="btnAcceptCoupon" onclick="acceptCurrentCoupon()">Accept Karna Hi Padega! 📌</button>
-            <div class="coupon-stamp-reveal" id="couponStamp">ACCEPTED BY BACCHI! ✅</div>
+
+            <button class="btn-force-accept" id="btnAcceptCoupon" onclick="acceptCurrentCoupon()"> Aapke Liye
+              🤗</button>
+            <div class="coupon-stamp-reveal" id="couponStamp">Maan liya na 😏</div>
           </div>
-          
+
           <div class="coupon-progress-text" id="couponProgress">Coupon 1 of 4</div>
         </div>
 
         <button class="btn-next-step" id="btnAfterCoupons" style="display: none;" onclick="goToSlide(3)">
-          Ek Zaroori Sawaal... 🥺👉
+          Ek Zaroori Sawaal... 🥺
         </button>
       </div>
     </section>
@@ -891,13 +943,15 @@
     <section class="slide" id="slide4">
       <div class="mobile-card">
         <div class="washi-tape-top"></div>
-        
+
         <!-- Pleading Dudu GIF -->
-        <img src="https://media1.tenor.com/m/wDR4aS0xUmkAAAAC/dudu-bubu.gif" alt="Pleading Dudu" class="apology-gif-mobile" id="apologyGifMobile" />
+        <img src="https://media1.tenor.com/m/wDR4aS0xUmkAAAAC/dudu-bubu.gif" alt="Pleading Dudu"
+          class="apology-gif-mobile" id="apologyGifMobile" />
 
         <h2 class="slide-title" id="apologyTitleMobile">Mujhe Maaf Kardiya? 🥺👉👈</h2>
         <p class="slide-sub" id="apologySubMobile">
-          I know maine stupid silly baat bol di thi... I am really very sorry meri jaan. Please batao na?
+          I know maine acche se baat nahi ki......aur gussa bhi ho gaya tha toh uske liye....I am really very sorry meri
+          laado. Maaf kardo ab?
         </p>
 
         <!-- Buttons Arena -->
@@ -910,12 +964,13 @@
 
         <!-- Celebration Box after forgiveness -->
         <div class="celebration-box-m" id="celebrationBoxMobile">
-          <img src="https://media.tenor.com/D6HDHJLAqb4AAAAi/dudu-bubu-dudu.gif" alt="Bubu Dudu Hug" class="celebration-gif-m" />
-          <h3 class="celebration-title-m">YAAAYYY! Meri Pyaari Bacchi! 🎉🥰</h3>
+          <img src="https://media.tenor.com/D6HDHJLAqb4AAAAi/dudu-bubu-dudu.gif" alt="Bubu Dudu Hug"
+            class="celebration-gif-m" />
+          <h3 class="celebration-title-m">YAAAYYY! Meri Pyaari Bacchi!💖</h3>
           <p class="celebration-text-m">
-            Thank you so much for forgiving me! ❤️ I love you the most in the entire universe! 💖
+            Kitni acchi ho aap, aise hi iss naadan balak pe daya aur rahem banaye rakhiye devi ji 🥺💕
           </p>
-          <button class="btn-next-step" onclick="goToSlide(4)">Ek Letter Padh Lo 💌👉</button>
+          <button class="btn-next-step" onclick="goToSlide(4)">Accha, Haan ye aapke liye😁</button>
         </div>
       </div>
     </section>
@@ -924,28 +979,31 @@
     <section class="slide" id="slide5">
       <div class="mobile-card">
         <div class="washi-tape-top"></div>
-        
+
         <div class="envelope-mobile">
-          <h3 class="letter-header-m">Dearest Bacchi 💌,</h3>
+          <h3 class="letter-header-m">Soni Bacchi 💌,</h3>
           <div class="letter-content-m">
             <p>
-              Happy Birthday to the most adorable, caring, sleepyhead & foodie human in my life! ✨
+              Happy Birthday to the most adorable, sundar, sleepyhead & foodie human in my life! ✨
             </p>
             <p>
-              I know kabhi-kabhi main dumb cheezein bol deta hoon, par my love for you will always be 10000%. 
-              Tumhari ek smile meri poori duniya theek kar deti hai.
+              I know kabhi kabhi main gusse mein sahi se baat nahi kar pata hun, par my Hate for you will always be
+              10000%.
+              Aapki ek smile mera pura mood theek kar deta hai(You look best na isliye🫣💞)
             </p>
             <p>
-              May this birthday bring you infinite happiness, lots of tasty food, deep sweet naps, and zero reasons to get mad at me! 😂💖
+              May this birthday bring you unimaginable happiness, lots of tasty food(me), sweet naps, and zero reasons
+              to
+              get mad at me!💖
             </p>
           </div>
           <div class="letter-signature-m">
-            Forever & Always Yours,<br/>
-            Your Dummy ❤️
+            Aapka Aagyakari,<br />
+            Chota Baccha😁
           </div>
         </div>
 
-        <button class="btn-replay-story" onclick="goToSlide(0)">🔄 Replay Surprise</button>
+        <button class="btn-replay-story" onclick="goToSlide(0)">Wapas Dekhna Hai?</button>
       </div>
     </section>
 
@@ -957,7 +1015,7 @@
       <img src="https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp" alt="Teasing Bubu" class="tease-gif-m" />
       <h3 class="tease-modal-title">Arey Itni Jaldi?? 😏</h3>
       <p class="tease-modal-text">
-        Itna aasan thodi tha mujhe maaf karna! 😂<br/>
+        Itna aasan thodi tha mujhe maaf karna! 😂<br />
         Thoda aur nakhre toh dikhao meri bacchi! 😜
       </p>
       <button class="btn-real-forgive" id="btnRealForgive">Acha Sach Me 100% Maaf Kiya! ❤️</button>
@@ -966,4 +1024,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

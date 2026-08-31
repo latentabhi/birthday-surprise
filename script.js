@@ -134,7 +134,7 @@ if (musicBtn) {
 
 const ConfettiEngine = (function () {
   const canvas = document.getElementById('confetti-canvas');
-  if (!canvas) return { shoot: () => {} };
+  if (!canvas) return { shoot: () => { } };
   const ctx = canvas.getContext('2d');
   let W = (canvas.width = window.innerWidth);
   let H = (canvas.height = window.innerHeight);
@@ -236,7 +236,7 @@ const indicatorDots = document.querySelectorAll('.indicator-dot');
 
 window.goToSlide = function (targetIndex) {
   if (targetIndex < 0 || targetIndex >= slides.length) return;
-  
+
   slides.forEach((s, idx) => {
     s.classList.remove('active', 'previous');
     if (idx < targetIndex) s.classList.add('previous');
@@ -261,36 +261,36 @@ const gussaStepsData = [
   {
     percent: 100,
     valText: '100% (Extreme Danger 🚨)',
-    caption: 'Arey re! Itna zyada gussa?! Jaldi se niche tap karke thanda karo! 👇',
-    btnText: '🧊 Gussa Thanda Karo (Tap Here!)'
+    caption: 'Arey re! Itna zyada gussa?!',
+    btnText: 'Thoda Rahem Karo Bacchi🥺'
   },
   // After Tap 1 (Step 1)
   {
     percent: 75,
     valText: '75% (Danger Zone ⚠️)',
-    caption: 'Thoda sa kam hua... par abhi bhi aankhein laal hain! Ek baar aur tap karo! 🧊',
-    btnText: '🧊 Aur Thanda Karo (Tap 2/4)'
+    caption: 'Thoda sa kam hua... par abhi bhi aankhein laal hain aapki!',
+    btnText: 'Kar bhi lo ab 😞'
   },
   // After Tap 2 (Step 2)
   {
     percent: 50,
     valText: '50% (Pout Mode Activated 😤)',
-    caption: '50% gussa bacha hai... lagta hai momos aur ice-cream khilane padenge! 🥟🍦',
-    btnText: '🧊 Thoda Aur Dabao (Tap 3/4)'
+    caption: 'abhi bhi gussa bacha hai...lagta hai momos aur ice-cream khilane padenge! 🥟🍦',
+    btnText: 'Kam kar lo na betu 😣 '
   },
   // After Tap 3 (Step 3)
   {
     percent: 25,
     valText: '25% (Almost Smiling 😊)',
     caption: 'Arey waah! Almost shaant! Bas ek pyaari si smile bachi hai meri bacchi! 🌸',
-    btnText: '🧊 Ek Aakhri Tap Karo! (Tap 4/4) 🌸'
+    btnText: 'Soni si bacchi bano aap ab 🌸'
   },
   // After Tap 4 (Step 4 — Finished!)
   {
     percent: 0,
     valText: '0% (Totally Calm & In Love 🍯🥰)',
-    caption: '🎉 YAAAY! Gussa 0% Ho Gaya! You are officially ready for the surprises! 💖',
-    btnText: '🎉 Gussa 0%! Aage Dekho 👉'
+    caption: 'Chalo Shaant toh hue aap 💖',
+    btnText: 'HEHE, meri cutiepie'
   }
 ];
 
@@ -339,22 +339,22 @@ if (gussaTrack) {
   const polaroids = [
     {
       title: 'The Drama Queen 👑',
-      desc: 'Jab tum gussa hoti ho toh darr bhi lagta hai aur tum cute bhi lagti ho! 😂',
+      desc: 'Jab aap gussa hoti ho toh aapse dar bhi lagta hai aur aap cute bhi😋!',
       img: 'https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif'
     },
     {
-      title: 'Kumbhkaran + Foodie Combo 😴🍕',
-      desc: '24 ghante sona hai aur uthte hi khana mangna! Neend aur khane ke baad meri baari aati hai 😂❤️',
+      title: 'Sotlu Bacchi😴🍕',
+      desc: 'Din bhar bas neend hi toh ghumti hai aapke dimaag mein! Neend aur khane ke baad meri baari aati hai 😏',
       img: 'https://media.tenor.com/8NdKLwX37kAAAAAm/dudu-sleep-dudu-bubu.webp'
     },
     {
       title: 'Supreme Court Judge ⚖️',
-      desc: 'Chahe galti kisi ki bhi ho, last me jeetna toh tumhe hi hai madam! 😌',
+      desc: 'Chahe galti kisi ki bhi ho, last me jeetna toh aapko hi hai bhutki shahiba! 😌',
       img: 'https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp'
     },
     {
-      title: 'My Whole World 🌍',
-      desc: 'Chahe kitni bhi ladai ho jaye, I still love you the most in the entire world! 💖',
+      title: 'Meri Laado 💞',
+      desc: 'Chahe kitni bhi ladai ho jaye, I still hate you the most in the entire world! 💖',
       img: 'https://media.tenor.com/Zrr4L_Wd4JkAAAAi/bubu-rub-bubu-love-dudu.gif'
     }
   ];
@@ -394,23 +394,23 @@ if (gussaTrack) {
   const coupons = [
     {
       icon: '👑',
-      title: '"You Win Every Argument" Pass',
+      title: "Chalo Aap Jiti",
       desc: 'Valid especially for today. Jo bologe woh sar aankhon par! Koi behes nahi.'
     },
     {
       icon: '🫂',
-      title: 'Unlimited Tight Hugs & Cuddles',
-      desc: 'Whenever you are sad, angry, or just want warmth. Non-stop tight cuddles!'
+      title: 'Cutiepie Accessibility',
+      desc: 'Whenever you are sad, angry, or just want warmth. Non-stop tight cuddles!(Iski mereko jyada jarurat hai btw 🫣)'
     },
     {
       icon: '🍦',
-      title: 'Midnight Momos & Ice Cream Date',
-      desc: 'Whenever you crave street food, on my bill anytime! No questions asked.'
+      title: 'Ghumne Chalna Hai',
+      desc: "Let's plan, itna dur mat rakh mereko 😾"
     },
     {
       icon: '💆‍♀️',
       title: 'Head Massage & Pampering Champi',
-      desc: 'Full 30-min relaxation champi session till you fall asleep peacefully.'
+      desc: 'Meri Teraf se thodi si helping 😁'
     }
   ];
 
@@ -440,7 +440,7 @@ if (gussaTrack) {
     btnAccept.style.display = 'none';
     stampEl.style.display = 'inline-block';
     cardEl.classList.add('stamped');
-    
+
     CuteAudio.playSlamSound();
     ConfettiEngine.shoot(45);
 
@@ -479,14 +479,14 @@ if (gussaTrack) {
   let hasTeasedOnce = false;
 
   const taunts = [
-    'Arey pakad ke dikhao pehle! 🏃‍♂️💨',
+    'Arey pakad ke dikha bhutki tu pehle! 😏',
     'Nahi wala button bas showpiece hai! 😜',
-    'Dekho Dudu ro raha hai kone me jaake 😭',
-    'Kitna bhav khaaogi aaj? Birthday hai reham karo bacchi! 🥺👉👈',
+    'Dekho bechara ro raha hai kone me jaake 😞',
+    'Kitna bhav khaaogi aaj? Birthday hai reham kar bacchi! 🥺👉👈',
     'Haath dukh jayenge tap karte karte, maan jao na! 😂',
-    'Main chocolate aur momos bhi khilaunga pakka! 🍫🥟',
+    'Main chocolate aur momos bhi khilaunga pakka! 🥺',
     'Nahi bolne ka koi option hi nahi hai! 💕',
-    'Bas ab Haan pe tap karo meri sweetu! 🥰',
+    'Bas ab Haan pe tap karo meri betu! 🥰',
   ];
 
   function evadeNoButton(e) {
