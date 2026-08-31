@@ -1,6 +1,6 @@
 /* ==========================================================================
-   BUBU & DUDU BIRTHDAY SITE — MOBILE-FIRST SLIDE-BY-SLIDE STORY DECK
-   Pastel Pink Scrapbook Aesthetic, Card-by-Card Flow, Touch Optimized
+   BUBU & DUDU BIRTHDAY SITE — MOBILE-FIRST STORY DECK STYLES
+   Pastel Pink Scrapbook Aesthetic, Card-by-Card Deck, Touch-Optimized
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Quicksand:wght@500;600;700;800&family=Gaegu:wght@700&display=swap');
@@ -38,7 +38,8 @@
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Prevent native scroll, use slide transitions */
+  overflow: hidden;
+  position: fixed;
 }
 
 body {
@@ -50,7 +51,6 @@ body {
   background-size: 30px 30px;
   background-position: 0 0, 15px 15px;
   color: var(--text-dark);
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
