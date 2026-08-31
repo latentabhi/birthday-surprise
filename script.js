@@ -1,44 +1,137 @@
 /* ==========================================================================
-   BUBU & DUDU BIRTHDAY & APOLOGY SITE — JAVASCRIPT
-   - Web Audio synthesizer for cute birthday melody
-   - Confetti & Floating Hearts Engine
-   - Interactive Gussa Meter (99% -> 0%)
-   - Forgiveness Game with Evading "Nahi" Button & "Itni Jaldi?!" Tease Modal
-   - Coupon Redemption Stamps
+   BUBU & DUDU BIRTHDAY SITE — JAVASCRIPT
+   Mobile Story Deck Engine, Card-by-Card Coupons, Anger Meter & Tease Game
    ========================================================================== */
 
-// ─── 1. FLOATING HEARTS & DOODLES ENGINE ───
-(function initFloatingElements() {
+// ─── 1. AUDIO & SOUND EFFECTS SYNTHESIZER ───
+const CuteAudio = (function () {
+  let audioCtx = null;
+  let isPlaying = false;
+  let timerId = null;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  function playNote(freq, start, duration, type = 'triangle', gainVal = 0.12) {
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, start);
+
+    gain.gain.setValueAtTime(0.001, start);
+    gain.gain.exponentialRampToValueAtTime(gainVal, start + 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(start);
+    osc.stop(start + duration);
+  }
+
+  const notes = [
+    { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 },
+    { f: 349.23, d: 0.6 }, { f: 329.63, d: 1.1 },
+
+    { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 },
+    { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.1 },
+
+    { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 523.25, d: 0.6 }, { f: 440.00, d: 0.6 },
+    { f: 349.23, d: 0.6 }, { f: 329.63, d: 0.6 }, { f: 293.66, d: 0.8 },
+
+    { f: 466.16, d: 0.35 }, { f: 466.16, d: 0.25 }, { f: 440.00, d: 0.6 }, { f: 349.23, d: 0.6 },
+    { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.4 },
+  ];
+
+  function playMelodyLoop() {
+    if (!isPlaying) return;
+    initAudio();
+    let now = audioCtx.currentTime;
+    let totalTime = 0;
+
+    notes.forEach((n) => {
+      playNote(n.f, now + totalTime, n.d, 'triangle', 0.12);
+      playNote(n.f * 2, now + totalTime + 0.02, n.d * 0.5, 'sine', 0.03);
+      totalTime += n.d + 0.08;
+    });
+
+    timerId = setTimeout(() => {
+      if (isPlaying) playMelodyLoop();
+    }, (totalTime + 1) * 1000);
+  }
+
+  function toggle(button, textSpan) {
+    initAudio();
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+      button.classList.add('playing');
+      textSpan.textContent = 'Pause ⏸️';
+      playMelodyLoop();
+    } else {
+      button.classList.remove('playing');
+      textSpan.textContent = 'Music 🎵';
+      clearTimeout(timerId);
+    }
+  }
+
+  function playCutePop() {
+    initAudio();
+    if (!audioCtx) return;
+    let now = audioCtx.currentTime;
+    playNote(523.25, now, 0.12, 'sine', 0.18);
+    playNote(659.25, now + 0.08, 0.18, 'sine', 0.18);
+    playNote(783.99, now + 0.16, 0.25, 'sine', 0.2);
+  }
+
+  function playSlamSound() {
+    initAudio();
+    if (!audioCtx) return;
+    let now = audioCtx.currentTime;
+    playNote(220, now, 0.1, 'triangle', 0.25);
+    playNote(440, now + 0.05, 0.2, 'sine', 0.2);
+  }
+
+  return { toggle, playCutePop, playSlamSound };
+})();
+
+// Music Button listener
+const musicBtn = document.getElementById('musicBtn');
+const musicText = document.getElementById('musicText');
+if (musicBtn) {
+  musicBtn.addEventListener('click', () => {
+    CuteAudio.toggle(musicBtn, musicText);
+  });
+}
+
+
+// ─── 2. FLOATING HEARTS & CONFETTI ENGINE ───
+(function initFloating() {
   const container = document.getElementById('floatingLayer');
   if (!container) return;
-
-  const emojis = ['💖', '🌸', '✨', '🎂', '💕', '🍓', '🧸', '🍬', '🌷'];
-
-  function createFloatingItem() {
+  const emojis = ['💖', '🌸', '✨', '🎂', '💕', '🍓', '🧸', '🍬'];
+  function spawnItem() {
     const el = document.createElement('span');
     el.className = 'floating-icon';
     el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     el.style.left = Math.random() * 95 + 'vw';
-    const duration = Math.random() * 8 + 8;
+    const duration = Math.random() * 6 + 6;
     el.style.animationDuration = duration + 's';
-    el.style.fontSize = (Math.random() * 16 + 14) + 'px';
+    el.style.fontSize = (Math.random() * 14 + 14) + 'px';
     container.appendChild(el);
-
-    setTimeout(() => {
-      el.remove();
-    }, duration * 1000);
+    setTimeout(() => el.remove(), duration * 1000);
   }
-
-  // Spawn initial burst
-  for (let i = 0; i < 12; i++) {
-    setTimeout(createFloatingItem, i * 400);
-  }
-  // Periodic spawning
-  setInterval(createFloatingItem, 1200);
+  for (let i = 0; i < 8; i++) setTimeout(spawnItem, i * 300);
+  setInterval(spawnItem, 1000);
 })();
 
-
-// ─── 2. CONFETTI CANVAS ENGINE ───
 const ConfettiEngine = (function () {
   const canvas = document.getElementById('confetti-canvas');
   if (!canvas) return { shoot: () => {} };
@@ -59,7 +152,7 @@ const ConfettiEngine = (function () {
     return {
       x: x !== undefined ? x : Math.random() * W,
       y: y !== undefined ? y : Math.random() * H - H,
-      r: Math.random() * 8 + 4,
+      r: Math.random() * 7 + 4,
       d: Math.random() * 50,
       color: colors[Math.floor(Math.random() * colors.length)],
       tilt: Math.floor(Math.random() * 10) - 10,
@@ -67,7 +160,7 @@ const ConfettiEngine = (function () {
       tiltAngleInc: Math.random() * 0.08 + 0.04,
       shape: Math.random() > 0.4 ? 'circle' : (Math.random() > 0.5 ? 'rect' : 'heart'),
       vx: (Math.random() - 0.5) * 4,
-      vy: Math.random() * 3 + 2,
+      vy: Math.random() * 3 + 2.5,
     };
   }
 
@@ -100,7 +193,7 @@ const ConfettiEngine = (function () {
 
       ctx.beginPath();
       if (p.shape === 'heart') {
-        drawHeart(p.x, p.y, p.r * 1.5, p.color);
+        drawHeart(p.x, p.y, p.r * 1.4, p.color);
       } else if (p.shape === 'circle') {
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
@@ -122,9 +215,9 @@ const ConfettiEngine = (function () {
     requestAnimationFrame(loop);
   }
 
-  function shoot(amount = 80, originX, originY) {
+  function shoot(amount = 70) {
     for (let i = 0; i < amount; i++) {
-      particles.push(createParticle(originX, originY));
+      particles.push(createParticle());
     }
     if (!isRunning) {
       isRunning = true;
@@ -136,127 +229,48 @@ const ConfettiEngine = (function () {
 })();
 
 
-// ─── 3. WEB AUDIO SYNTHESIZER FOR CUTE BIRTHDAY TUNE ───
-const CuteAudio = (function () {
-  let audioCtx = null;
-  let isPlaying = false;
-  let timerId = null;
+// ─── 3. STORY DECK NAVIGATION (1 PAGE AT A TIME) ───
+let currentSlideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const indicatorDots = document.querySelectorAll('.indicator-dot');
 
-  function initAudio() {
-    if (!audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContext();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-  }
-
-  // Play a soft sweet chiptune note
-  function playNote(freq, start, duration, type = 'sine', gainVal = 0.15) {
-    if (!audioCtx) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, start);
-
-    gain.gain.setValueAtTime(0.001, start);
-    gain.gain.exponentialRampToValueAtTime(gainVal, start + 0.05);
-    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start(start);
-    osc.stop(start + duration);
-  }
-
-  // Happy Birthday Melody in C Major
-  const notes = [
-    { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 },
-    { f: 349.23, d: 0.6 }, { f: 329.63, d: 1.1 },
-
-    { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 293.66, d: 0.6 }, { f: 261.63, d: 0.6 },
-    { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.1 },
-
-    { f: 261.63, d: 0.35 }, { f: 261.63, d: 0.25 }, { f: 523.25, d: 0.6 }, { f: 440.00, d: 0.6 },
-    { f: 349.23, d: 0.6 }, { f: 329.63, d: 0.6 }, { f: 293.66, d: 0.8 },
-
-    { f: 466.16, d: 0.35 }, { f: 466.16, d: 0.25 }, { f: 440.00, d: 0.6 }, { f: 349.23, d: 0.6 },
-    { f: 392.00, d: 0.6 }, { f: 349.23, d: 1.4 },
-  ];
-
-  function playMelodyLoop() {
-    if (!isPlaying) return;
-    initAudio();
-    let now = audioCtx.currentTime;
-    let totalTime = 0;
-
-    notes.forEach((n) => {
-      playNote(n.f, now + totalTime, n.d, 'triangle', 0.12);
-      // Add a sparkling harmonic
-      playNote(n.f * 2, now + totalTime + 0.02, n.d * 0.5, 'sine', 0.03);
-      totalTime += n.d + 0.08;
-    });
-
-    timerId = setTimeout(() => {
-      if (isPlaying) playMelodyLoop();
-    }, (totalTime + 1) * 1000);
-  }
-
-  function toggle(button, textSpan) {
-    initAudio();
-    isPlaying = !isPlaying;
-    if (isPlaying) {
-      button.classList.add('playing');
-      textSpan.textContent = 'Pause Music ⏸️';
-      playMelodyLoop();
-    } else {
-      button.classList.remove('playing');
-      textSpan.textContent = 'Play Music 🎵';
-      clearTimeout(timerId);
-    }
-  }
-
-  function playCuteSoundEffect() {
-    initAudio();
-    if (!audioCtx) return;
-    let now = audioCtx.currentTime;
-    playNote(523.25, now, 0.15, 'sine', 0.2);
-    playNote(659.25, now + 0.1, 0.2, 'sine', 0.2);
-    playNote(783.99, now + 0.2, 0.35, 'sine', 0.2);
-  }
-
-  return { toggle, playCuteSoundEffect };
-})();
-
-// Music button listener
-const musicBtn = document.getElementById('musicBtn');
-const musicText = document.getElementById('musicText');
-if (musicBtn) {
-  musicBtn.addEventListener('click', () => {
-    CuteAudio.toggle(musicBtn, musicText);
+window.goToSlide = function (targetIndex) {
+  if (targetIndex < 0 || targetIndex >= slides.length) return;
+  
+  slides.forEach((s, idx) => {
+    s.classList.remove('active', 'previous');
+    if (idx < targetIndex) s.classList.add('previous');
+    else if (idx === targetIndex) s.classList.add('active');
   });
-}
+
+  indicatorDots.forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === targetIndex);
+  });
+
+  currentSlideIndex = targetIndex;
+  CuteAudio.playCutePop();
+  ConfettiEngine.shoot(30);
+};
 
 
-// ─── 4. INTERACTIVE GUSSA METER ───
+// ─── 4. SLIDE 1: GUSSA METER LOGIC ───
 (function initGussaMeter() {
   const gussaVal = document.getElementById('gussaVal');
   const gussaFill = document.getElementById('gussaFill');
   const gussaCaption = document.getElementById('gussaCaption');
   const btnCoolDown = document.getElementById('btnCoolDown');
   const gussaTrack = document.getElementById('gussaTrack');
-  const heroGif = document.getElementById('heroGif');
+  const heroBubuImg = document.getElementById('heroBubuImg');
+  const calmRevealBox = document.getElementById('calmRevealBox');
 
   let currentLevel = 99;
 
   const captions = [
-    { min: 80, text: 'Arey re, itna gussa?! Niche click karke thanda karo! 👇', valText: '99% (Danger Zone 🚨)' },
-    { min: 50, text: 'Thoda kam hua... par abhi bhi dangerous hai! Ek baar aur click karo! 🧊', valText: '65% (High Alert ⚠️)' },
-    { min: 25, text: '50% gussa bacha hai... momos ya ice-cream chahiye kya? 🍦', valText: '40% (Cooling Down 🍧)' },
-    { min: 1, text: 'Almost shaant! Bas ek smile bachi hai babu 😊', valText: '15% (Almost Sweet 🌸)' },
-    { min: 0, text: '🎉 0% GUSSA! Yayyy! Full Pyar Mode Activated! 💖🥰', valText: '0% (Totally Calm & Sweet 🍯)' },
+    { min: 80, text: 'Arey re! Gussa thanda karne ke liye button dabao! 👇', valText: '99% (Danger Zone 🚨)' },
+    { min: 50, text: 'Thoda kam hua... par abhi bhi dangerous hai! Ek baar aur tap karo! 🧊', valText: '65% (High Alert ⚠️)' },
+    { min: 25, text: '50% gussa bacha hai... momos ya ice-cream khilaun kya? 🍦', valText: '40% (Cooling Down 🍧)' },
+    { min: 1, text: 'Almost shaant! Bas ek smile bachi hai meri bacchi 😊', valText: '15% (Almost Sweet 🌸)' },
+    { min: 0, text: '🎉 0% GUSSA! Full Pyar Mode Activated! 💖🥰', valText: '0% (Totally Sweet & Calm 🍯)' },
   ];
 
   function updateDisplay() {
@@ -268,15 +282,13 @@ if (musicBtn) {
     }
 
     if (currentLevel === 0) {
-      btnCoolDown.textContent = '🥰 Gussa Khatam! You Are The Sweetest!';
-      btnCoolDown.style.background = '#2a9d8f';
-      btnCoolDown.style.color = '#ffffff';
-      btnCoolDown.style.borderColor = '#2a9d8f';
-      if (heroGif) {
-        heroGif.src = 'https://media1.tenor.com/m/q_Sav516k1IAAAAC/bubu-dudu-dudu-dancing.gif';
+      btnCoolDown.style.display = 'none';
+      calmRevealBox.style.display = 'block';
+      if (heroBubuImg) {
+        heroBubuImg.src = 'https://media1.tenor.com/m/q_Sav516k1IAAAAC/bubu-dudu-dudu-dancing.gif';
       }
-      ConfettiEngine.shoot(60);
-      CuteAudio.playCuteSoundEffect();
+      ConfettiEngine.shoot(70);
+      CuteAudio.playCutePop();
     }
   }
 
@@ -284,7 +296,7 @@ if (musicBtn) {
     if (currentLevel > 0) {
       currentLevel = Math.max(0, currentLevel - 25);
       updateDisplay();
-      CuteAudio.playCuteSoundEffect();
+      CuteAudio.playCutePop();
       ConfettiEngine.shoot(25);
     }
   }
@@ -294,29 +306,147 @@ if (musicBtn) {
 })();
 
 
-// ─── 5. LOVE COUPONS REDEEM FUNCTION ───
-window.redeemCoupon = function (cardEl) {
-  if (cardEl.classList.contains('redeemed')) return;
-  cardEl.classList.add('redeemed');
-  const stamp = cardEl.querySelector('.coupon-stamp');
-  if (stamp) {
-    stamp.textContent = 'CLAIMED BY QUEEN! ✅';
+// ─── 5. SLIDE 2: POLAROIDS CAROUSEL (WITH SLEEPYHEAD FOODIE CARD) ───
+(function initPolaroids() {
+  const polaroids = [
+    {
+      title: 'The Drama Queen 👑',
+      desc: 'Jab tum gussa hoti ho toh darr bhi lagta hai aur tum cute bhi lagti ho! 😂',
+      img: 'https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif'
+    },
+    {
+      title: 'Kumbhkaran + Foodie Combo 😴🍕',
+      desc: '24 ghante sona hai aur uthte hi khana mangna! Neend aur khane ke baad meri baari aati hai 😂❤️',
+      img: 'https://media.tenor.com/8NdKLwX37kAAAAAm/dudu-sleep-dudu-bubu.webp'
+    },
+    {
+      title: 'Supreme Court Judge ⚖️',
+      desc: 'Chahe galti kisi ki bhi ho, last me jeetna toh tumhe hi hai madam! 😌',
+      img: 'https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp'
+    },
+    {
+      title: 'My Whole World 🌍',
+      desc: 'Chahe kitni bhi ladai ho jaye, I still love you the most in the entire world! 💖',
+      img: 'https://media.tenor.com/Zrr4L_Wd4JkAAAAi/bubu-rub-bubu-love-dudu.gif'
+    }
+  ];
+
+  let pIndex = 0;
+  const polaroidImg = document.getElementById('polaroidImg');
+  const polaroidTitle = document.getElementById('polaroidTitle');
+  const polaroidDesc = document.getElementById('polaroidDesc');
+  const polaroidCount = document.getElementById('polaroidCount');
+  const btnPrev = document.getElementById('btnPrevPolaroid');
+  const btnNext = document.getElementById('btnNextPolaroid');
+
+  function renderPolaroid() {
+    const item = polaroids[pIndex];
+    polaroidImg.src = item.img;
+    polaroidTitle.textContent = item.title;
+    polaroidDesc.textContent = item.desc;
+    polaroidCount.textContent = `${pIndex + 1} / ${polaroids.length}`;
+    CuteAudio.playCutePop();
   }
-  CuteAudio.playCuteSoundEffect();
-  ConfettiEngine.shoot(40);
-};
+
+  if (btnPrev && btnNext) {
+    btnPrev.addEventListener('click', () => {
+      pIndex = (pIndex - 1 + polaroids.length) % polaroids.length;
+      renderPolaroid();
+    });
+    btnNext.addEventListener('click', () => {
+      pIndex = (pIndex + 1) % polaroids.length;
+      renderPolaroid();
+    });
+  }
+})();
 
 
-// ─── 6. THE FORGIVENESS GAME WITH "NAHI" EVASION & "ITNI JALDI?!" TEASE ───
-(function initForgivenessGame() {
-  const btnYes = document.getElementById('btnYes');
-  const btnNo = document.getElementById('btnNo');
-  const tauntBubble = document.getElementById('tauntBubble');
-  const buttonsArena = document.getElementById('buttonsArena');
+// ─── 6. SLIDE 3: LOVE COUPONS (FORCED CARD-BY-CARD ACCEPTANCE FOR BACCHI) ───
+(function initCouponsDeck() {
+  const coupons = [
+    {
+      icon: '👑',
+      title: '"You Win Every Argument" Pass',
+      desc: 'Valid especially for today. Jo bologe woh sar aankhon par! Koi behes nahi.'
+    },
+    {
+      icon: '🫂',
+      title: 'Unlimited Tight Hugs & Cuddles',
+      desc: 'Whenever you are sad, angry, or just want warmth. Non-stop tight cuddles!'
+    },
+    {
+      icon: '🍦',
+      title: 'Midnight Momos & Ice Cream Date',
+      desc: 'Whenever you crave street food, on my bill anytime! No questions asked.'
+    },
+    {
+      icon: '💆‍♀️',
+      title: 'Head Massage & Pampering Champi',
+      desc: 'Full 30-min relaxation champi session till you fall asleep peacefully.'
+    }
+  ];
+
+  let cIndex = 0;
+  const cardEl = document.getElementById('currentCouponCard');
+  const iconEl = document.getElementById('couponIcon');
+  const titleEl = document.getElementById('couponTitle');
+  const descEl = document.getElementById('couponDesc');
+  const btnAccept = document.getElementById('btnAcceptCoupon');
+  const stampEl = document.getElementById('couponStamp');
+  const progressEl = document.getElementById('couponProgress');
+  const btnAfterCoupons = document.getElementById('btnAfterCoupons');
+
+  function showCoupon(index) {
+    const item = coupons[index];
+    iconEl.textContent = item.icon;
+    titleEl.textContent = item.title;
+    descEl.textContent = item.desc;
+    progressEl.textContent = `Coupon ${index + 1} of ${coupons.length}`;
+
+    // Reset button & stamp state
+    btnAccept.style.display = 'block';
+    stampEl.style.display = 'none';
+    cardEl.classList.remove('stamped');
+  }
+
+  window.acceptCurrentCoupon = function () {
+    // Show stamp & sound
+    btnAccept.style.display = 'none';
+    stampEl.style.display = 'inline-block';
+    cardEl.classList.add('stamped');
+    
+    CuteAudio.playSlamSound();
+    ConfettiEngine.shoot(45);
+
+    setTimeout(() => {
+      if (cIndex < coupons.length - 1) {
+        cIndex++;
+        showCoupon(cIndex);
+      } else {
+        // All coupons accepted!
+        progressEl.innerHTML = '🎉 <strong>All 4 Coupons Accepted by Bacchi!</strong>';
+        btnAfterCoupons.style.display = 'inline-flex';
+        ConfettiEngine.shoot(80);
+      }
+    }, 900);
+  };
+
+  showCoupon(0);
+})();
+
+
+// ─── 7. SLIDE 4: FORGIVENESS GAME WITH EVADING "NAHI" & "ITNI JALDI?!" TEASE ───
+(function initApologyGame() {
+  const btnYes = document.getElementById('btnYesMobile');
+  const btnNo = document.getElementById('btnNoMobile');
+  const tauntBubble = document.getElementById('tauntBubbleMobile');
+  const buttonsArena = document.getElementById('buttonsArenaMobile');
   const teaseModal = document.getElementById('teaseModal');
   const btnRealForgive = document.getElementById('btnRealForgive');
-  const celebrationBox = document.getElementById('celebrationBox');
-  const apologyGif = document.getElementById('apologyGif');
+  const celebrationBox = document.getElementById('celebrationBoxMobile');
+  const apologyGif = document.getElementById('apologyGifMobile');
+  const apologyTitle = document.getElementById('apologyTitleMobile');
+  const apologySub = document.getElementById('apologySubMobile');
 
   if (!btnYes || !btnNo) return;
 
@@ -324,14 +454,14 @@ window.redeemCoupon = function (cardEl) {
   let hasTeasedOnce = false;
 
   const taunts = [
-    'Arey aise kaise?! Pakad ke dikhao pehle! 🏃‍♂️💨',
-    'Nahi wala button toh bas dikhane ke liye tha! 😜',
+    'Arey pakad ke dikhao pehle! 🏃‍♂️💨',
+    'Nahi wala button bas showpiece hai! 😜',
     'Dekho Dudu ro raha hai kone me jaake 😭',
-    'Kitna bhav khaaogi aaj? Birthday hai reham karo! 🥺👉👈',
-    'Haath dukh jayenge click karte karte, maan jao na! 😂',
-    'Main chocolate aur momos bhi khilaunga please! 🍫🥟',
-    'Nahi bolne ka koi option hi nahi hai madam! 💕',
-    'Bas ab Haan pe click karo sweetu! 🥰',
+    'Kitna bhav khaaogi aaj? Birthday hai reham karo bacchi! 🥺👉👈',
+    'Haath dukh jayenge tap karte karte, maan jao na! 😂',
+    'Main chocolate aur momos bhi khilaunga pakka! 🍫🥟',
+    'Nahi bolne ka koi option hi nahi hai! 💕',
+    'Bas ab Haan pe tap karo meri sweetu! 🥰',
   ];
 
   function evadeNoButton(e) {
@@ -339,46 +469,38 @@ window.redeemCoupon = function (cardEl) {
     noCount++;
     tauntBubble.textContent = taunts[Math.min(noCount - 1, taunts.length - 1)];
 
-    // Get arena boundaries
-    const arenaRect = buttonsArena.getBoundingClientRect();
-    const btnRect = btnNo.getBoundingClientRect();
-
-    const maxDeltaX = Math.min(arenaRect.width / 2 - 40, 180);
-    const maxDeltaY = 60;
+    const maxDeltaX = 90;
+    const maxDeltaY = 40;
 
     const randomX = (Math.random() * 2 - 1) * maxDeltaX;
     const randomY = (Math.random() * 2 - 1) * maxDeltaY;
-    const randomRot = (Math.random() - 0.5) * 30;
+    const randomRot = (Math.random() - 0.5) * 25;
 
-    btnNo.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRot}deg) scale(0.92)`;
+    btnNo.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRot}deg) scale(0.9)`;
     btnNo.style.background = '#ffe5ec';
 
-    // Grow Yes button slightly each time No is attempted
-    const currentScale = 1 + Math.min(noCount * 0.05, 0.35);
+    const currentScale = 1 + Math.min(noCount * 0.05, 0.25);
     btnYes.style.transform = `scale(${currentScale})`;
 
-    CuteAudio.playCuteSoundEffect();
+    CuteAudio.playCutePop();
   }
 
-  // Hover & touch & click for No button
   btnNo.addEventListener('mouseenter', evadeNoButton);
   btnNo.addEventListener('touchstart', evadeNoButton);
   btnNo.addEventListener('click', evadeNoButton);
 
-  // YES BUTTON CLICK (First time -> show Tease Modal!)
+  // Yes Button Click (First time: Tease modal!)
   btnYes.addEventListener('click', () => {
     if (!hasTeasedOnce) {
-      // First time: Tease her!
       hasTeasedOnce = true;
       teaseModal.classList.add('active');
-      CuteAudio.playCuteSoundEffect();
+      CuteAudio.playCutePop();
     } else {
-      // If already teased, complete celebration
       triggerFinalCelebration();
     }
   });
 
-  // TEASE MODAL - REAL FORGIVE BUTTON CLICK
+  // Modal Real Forgive Button Click
   if (btnRealForgive) {
     btnRealForgive.addEventListener('click', () => {
       teaseModal.classList.remove('active');
@@ -387,26 +509,21 @@ window.redeemCoupon = function (cardEl) {
   }
 
   function triggerFinalCelebration() {
-    // Hide buttons & taunt
     buttonsArena.style.display = 'none';
     tauntBubble.style.display = 'none';
+    apologyTitle.style.display = 'none';
+    apologySub.style.display = 'none';
 
-    // Change apology gif to love kisses
     if (apologyGif) {
       apologyGif.src = 'https://media1.tenor.com/m/hlr3kptkdu4AAAAC/bubu-dudu.gif';
     }
 
-    // Show celebration card
     celebrationBox.style.display = 'block';
 
-    // Massive Confetti Explosion
     ConfettiEngine.shoot(120);
     setTimeout(() => ConfettiEngine.shoot(100), 500);
-    setTimeout(() => ConfettiEngine.shoot(120), 1200);
+    setTimeout(() => ConfettiEngine.shoot(120), 1100);
 
-    CuteAudio.playCuteSoundEffect();
-
-    // Scroll smoothly to celebration
-    celebrationBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    CuteAudio.playCutePop();
   }
 })();

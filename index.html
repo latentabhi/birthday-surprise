@@ -2,224 +2,187 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Happy Birthday Meri Jaan! 🎂💖</title>
-  <meta name="description" content="A special cute birthday surprise with Bubu & Dudu, compliments, cute teasing, and an apology from the heart!" />
+  <meta name="description" content="A cute mobile birthday story for my Bacchi — Bubu Dudu, interactive coupons, gussa meter & heartfelt apologies." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Gaegu:wght@700&family=Patrick+Hand&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Gaegu:wght@700&family=Patrick+Hand&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Canvas for Confetti -->
+  <!-- Confetti Canvas -->
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- Floating Hearts & Sparkles Layer -->
+  <!-- Floating Hearts Background Layer -->
   <div class="floating-elements-layer" id="floatingLayer"></div>
 
-  <!-- Top Floating Controls -->
-  <div class="top-controls">
-    <button class="btn-music-toggle" id="musicBtn">
-      <span class="music-icon">🎵</span> <span id="musicText">Play Music</span>
+  <!-- Top App Bar: Slide Dots Indicator & Music Toggle -->
+  <header class="top-app-bar">
+    <div class="story-indicators" id="storyIndicators">
+      <div class="indicator-dot active" data-index="0"></div>
+      <div class="indicator-dot" data-index="1"></div>
+      <div class="indicator-dot" data-index="2"></div>
+      <div class="indicator-dot" data-index="3"></div>
+      <div class="indicator-dot" data-index="4"></div>
+    </div>
+    <button class="btn-music-pill" id="musicBtn">
+      <span>🎵</span> <span id="musicText">Music</span>
     </button>
-  </div>
+  </header>
 
-  <!-- MAIN SCRAPBOOK CONTAINER -->
-  <main class="main-wrapper">
+  <!-- MAIN DECK CONTAINER (1 PAGE AT A TIME) -->
+  <main class="deck-container" id="deckContainer">
 
-    <!-- 1. HERO SECTION -->
-    <section class="scrapbook-card hero-section">
-      <div class="washi-tape"></div>
-      <div class="hero-sticker-badge">✨ It's Your Special Day! ✨</div>
-      
-      <div class="hero-bubu-dudu-wrap">
-        <!-- Bubu Dudu Birthday Celebration GIF -->
-        <img src="https://media.tenor.com/Qj40AdvEqKsAAAAi/bubu-happy.gif" alt="Bubu Happy Birthday" class="hero-gif" id="heroGif" />
-        <span class="floating-sticker sticker-1">🎂</span>
-        <span class="floating-sticker sticker-2">🎉</span>
-        <span class="floating-sticker sticker-3">💖</span>
-        <span class="floating-sticker sticker-4">🌸</span>
-      </div>
-
-      <h1 class="hero-title">Happy Birthday, Meri Jaan! 🎂💖</h1>
-      <p class="hero-sub">
-        Haan haan, mujhe pata hai thoda gussa ho mere se...<br/>
-        Par aaj <strong>tumhara birthday</strong> hai, toh thodi si smile toh banti hai na? 🥺👉👈
-      </p>
-
-      <!-- Interactive Gussa Meter -->
-      <div class="gussa-meter-box" id="gussaBox">
-        <div class="gussa-header">
-          <span class="gussa-title">🌡️ Current Gussa Level:</span>
-          <span class="gussa-val" id="gussaVal">99% (Danger Zone 🚨)</span>
-        </div>
-        <div class="gussa-bar-track" id="gussaTrack" title="Click to reduce anger!">
-          <div class="gussa-bar-fill" id="gussaFill"></div>
-        </div>
-        <div class="gussa-caption" id="gussaCaption">Arey re, itna gussa?! Niche click karke thanda karo! 👇</div>
-        <button class="btn-cool-down" id="btnCoolDown">🧊 Gussa Thanda Karo (Click Here!)</button>
-      </div>
-    </section>
-
-    <!-- 2. SCRAPBOOK / POLAROIDS OF US -->
-    <section class="scrapbook-card">
-      <div class="washi-tape yellow"></div>
-      <div style="text-align: center;">
-        <span class="section-tag">📸 Some Universal Truths</span>
-        <h2 class="section-heading">Things About You I Adore (Aur Thoda Sa Sach 😂)</h2>
-        <p class="section-desc">Puri tarah se unbiased and 100% true facts!</p>
-      </div>
-
-      <div class="polaroids-grid">
-        <!-- Card 1: The Angry Cutie -->
-        <div class="polaroid-card">
-          <div class="polaroid-tape"></div>
-          <div class="polaroid-img-wrap">
-            <img src="https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif" alt="Angry Bubu" class="polaroid-img" />
-          </div>
-          <div class="polaroid-caption">
-            <h3 class="polaroid-title">The Drama Queen 👑</h3>
-            <p class="polaroid-text">Jab tum gussa hoti ho toh darr bhi lagta hai aur tum cute bhi lagti ho! 😂</p>
-          </div>
-        </div>
-
-        <!-- Card 2: Foodie Partner -->
-        <div class="polaroid-card">
-          <div class="polaroid-tape"></div>
-          <div class="polaroid-img-wrap">
-            <img src="https://media.tenor.com/QOnS5_VOv-wAAAAi/bubu-dudu-date-bubu-dudu-fries.gif" alt="Food Date" class="polaroid-img" />
-          </div>
-          <div class="polaroid-caption">
-            <h3 class="polaroid-title">My Foodie Girl 🍟</h3>
-            <p class="polaroid-text">"Mujhe bhookh nahi hai" bolke mera aadha khana chura ke khaane wali! 🍕</p>
-          </div>
-        </div>
-
-        <!-- Card 3: Master of Arguments -->
-        <div class="polaroid-card">
-          <div class="polaroid-tape"></div>
-          <div class="polaroid-img-wrap">
-            <img src="https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp" alt="Smug Bubu" class="polaroid-img" />
-          </div>
-          <div class="polaroid-caption">
-            <h3 class="polaroid-title">Supreme Court Judge ⚖️</h3>
-            <p class="polaroid-text">Chahe galti kisi ki bhi ho, last me jeetna toh tumhe hi hai madam! 😌</p>
-          </div>
-        </div>
-
-        <!-- Card 4: My Favorite Person -->
-        <div class="polaroid-card">
-          <div class="polaroid-tape"></div>
-          <div class="polaroid-img-wrap">
-            <img src="https://media.tenor.com/Zrr4L_Wd4JkAAAAi/bubu-rub-bubu-love-dudu.gif" alt="Cuddles" class="polaroid-img" />
-          </div>
-          <div class="polaroid-caption">
-            <h3 class="polaroid-title">My Whole World 🌍</h3>
-            <p class="polaroid-text">Chahe kitni bhi ladai ho jaye, I still love you the most in the entire world! 💖</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. BIRTHDAY LOVE COUPONS -->
-    <section class="scrapbook-card">
-      <div class="washi-tape mint"></div>
-      <div style="text-align: center;">
-        <span class="section-tag">🎟️ Special Birthday Passes</span>
-        <h2 class="section-heading">Redeemable Love Coupons</h2>
-        <p class="section-desc">Click on any coupon to claim it right now! (No expiry date 🤞)</p>
-      </div>
-
-      <div class="coupons-grid">
-        <div class="coupon-card" onclick="redeemCoupon(this)">
-          <div class="coupon-icon">👑</div>
-          <h3 class="coupon-title">"You Win Every Argument" Pass</h3>
-          <p class="coupon-desc">Valid especially for today. Jo bologe woh sar aankhon par!</p>
-          <span class="coupon-stamp">Click to Redeem 📌</span>
-        </div>
-
-        <div class="coupon-card" onclick="redeemCoupon(this)">
-          <div class="coupon-icon">🫂</div>
-          <h3 class="coupon-title">Unlimited Tight Hugs</h3>
-          <p class="coupon-desc">Whenever you're sad, angry, or just want warmth. Non-stop cuddles!</p>
-          <span class="coupon-stamp">Click to Redeem 📌</span>
-        </div>
-
-        <div class="coupon-card" onclick="redeemCoupon(this)">
-          <div class="coupon-icon">🍦</div>
-          <h3 class="coupon-title">Midnight Momos & Ice Cream</h3>
-          <p class="coupon-desc">Whenever you crave street food, I'll take you out anytime!</p>
-          <span class="coupon-stamp">Click to Redeem 📌</span>
-        </div>
-
-        <div class="coupon-card" onclick="redeemCoupon(this)">
-          <div class="coupon-icon">💆‍♀️</div>
-          <h3 class="coupon-title">Head Massage & Pampering</h3>
-          <p class="coupon-desc">Full 30-min relaxation champi session till you fall asleep sweetly.</p>
-          <span class="coupon-stamp">Click to Redeem 📌</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. THE MAIN APOLOGY GAME (MUJHE MAAF KARDIYA?) -->
-    <section class="scrapbook-card apology-game-card" id="apologySection">
-      <div class="washi-tape"></div>
-      
-      <!-- Crying / Pleading Dudu GIF -->
-      <img src="https://media1.tenor.com/m/wDR4aS0xUmkAAAAC/dudu-bubu.gif" alt="Pleading Dudu" class="apology-bubu-gif" id="apologyGif" />
-
-      <h2 class="forgive-question-title">Mujhe Maaf Kardiya? 🥺👉👈</h2>
-      <p class="forgive-question-subtitle">
-        I know maine silly mistake ki... I am really very sorry meri jaan.<br/>
-        Please batao na, maaf kiya ki nahi?
-      </p>
-
-      <!-- Action Buttons Arena -->
-      <div class="buttons-arena" id="buttonsArena">
-        <button class="btn-forgive-yes" id="btnYes">Haan 🥰</button>
-        <button class="btn-forgive-no" id="btnNo">Nahi 😤</button>
-      </div>
-
-      <!-- Playful taunt lines when she tries to click No -->
-      <div class="taunt-bubble" id="tauntBubble"></div>
-
-      <!-- Celebration Content (Hidden Initially) -->
-      <div class="celebration-box" id="celebrationBox">
-        <img src="https://media.tenor.com/D6HDHJLAqb4AAAAi/dudu-bubu-dudu.gif" alt="Bubu Dudu Hug" class="celebration-gif" />
-        <h3 class="celebration-title">YAAAYYY! Sabse Pyaari Girlfriend! 🎉🥰</h3>
-        <p class="celebration-text">
-          Thank you so much for forgiving your stupid dummy! ❤️<br/>
-          I promise aage se dhyan rakhunga. Ab jaldi se ready ho jao, humara birthday celebration wait kar raha hai! 🎂🎁💐
+    <!-- ==================== SLIDE 1: HERO & GUSSA METER ==================== -->
+    <section class="slide active" id="slide1">
+      <div class="mobile-card">
+        <div class="washi-tape-top"></div>
+        <div class="badge-pill-small">✨ Special Birthday Surprise ✨</div>
+        
+        <img src="https://media.tenor.com/Qj40AdvEqKsAAAAi/bubu-happy.gif" alt="Bubu Birthday" class="hero-bubu-img" id="heroBubuImg" />
+        
+        <h1 class="slide-title">Happy Birthday Meri Jaan! 🎂💖</h1>
+        <p class="slide-sub">
+          I know thoda gussa ho mere se... par aaj tumhara birthday hai! Ek chhota sa gift tumhare liye 👇
         </p>
+
+        <!-- Interactive Gussa Meter -->
+        <div class="gussa-box-mobile">
+          <div class="gussa-header-mobile">
+            <span>🌡️ Gussa Level:</span>
+            <span class="gussa-val-text" id="gussaVal">99% (Danger Zone 🚨)</span>
+          </div>
+          <div class="gussa-track-mobile" id="gussaTrack">
+            <div class="gussa-fill-mobile" id="gussaFill"></div>
+          </div>
+          <div class="gussa-caption-mobile" id="gussaCaption">Arey re! Gussa thanda karne ke liye button dabao! 👇</div>
+          <button class="btn-cool-down-mobile" id="btnCoolDown">🧊 Gussa Thanda Karo (Tap Here!)</button>
+
+          <!-- Appears when Gussa reaches 0% -->
+          <div class="calm-reveal-box" id="calmRevealBox">
+            <div class="calm-reveal-text">🎉 YAAAY! Gussa Officially 0% Ho Gaya! 🥰<br/>Now let's see what's next for you!</div>
+            <button class="btn-next-step" onclick="goToSlide(1)">Aage Dekho 👉</button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 5. CUTE HANDWRITTEN LETTER -->
-    <section class="scrapbook-card letter-section">
-      <div class="washi-tape yellow"></div>
-      <div class="envelope-wrapper">
-        <h3 class="letter-header">Dearest Birthday Girl 💌,</h3>
-        <div class="letter-content">
-          <p>
-            Happy Birthday to the most beautiful, caring, and slightly stubborn person in my life! ✨
-          </p>
-          <p>
-            I know kabhi-kabhi main baaton me gadbad kar deta hoon, par mera intention kabhi tumhe hurt karne ka nahi hota. 
-            Seeing you upset hurts me 100 times more. You deserve all the happiness, respect, and unconditional love in this world.
-          </p>
-          <p>
-            Thank you for being in my life, for tolerating all my silly jokes, and for making every ordinary day feel magical. 
-            I am so grateful for you today and always.
-          </p>
-          <p>
-            May this year bring you endless smiles, success, good food, and lots of happy memories with me! 💖
-          </p>
+    <!-- ==================== SLIDE 2: POLAROIDS SCRAPBOOK ==================== -->
+    <section class="slide" id="slide2">
+      <div class="mobile-card">
+        <div class="washi-tape-top"></div>
+        <div class="badge-pill-small">📸 Kuch Kadwe-Meethe Sach</div>
+        <h2 class="slide-title">Things About You I Love! 😂💖</h2>
+        
+        <div class="polaroid-carousel-wrap">
+          <div class="polaroid-single-card" id="polaroidCard">
+            <div class="polaroid-img-box">
+              <img src="https://media1.tenor.com/m/wWerB2KmHSMAAAAC/angry-bubu.gif" alt="Polaroid Memory" id="polaroidImg" />
+            </div>
+            <h3 class="polaroid-title-text" id="polaroidTitle">The Drama Queen 👑</h3>
+            <p class="polaroid-desc-text" id="polaroidDesc">Jab tum gussa hoti ho toh darr bhi lagta hai aur tum cute bhi lagti ho! 😂</p>
+          </div>
+
+          <div class="polaroid-nav-btns">
+            <button class="btn-polaroid-nav" id="btnPrevPolaroid">◀ Back</button>
+            <span class="polaroid-count-badge" id="polaroidCount">1 / 4</span>
+            <button class="btn-polaroid-nav" id="btnNextPolaroid">Next ▶</button>
+          </div>
         </div>
-        <div class="letter-signature">
-          Forever & Always Yours,<br/>
-          Your Dummy ❤️
+
+        <button class="btn-next-step" onclick="goToSlide(2)">Bacchi Ke Passes 🎟️👉</button>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 3: LOVE COUPONS (CARD-BY-CARD FORCED) ==================== -->
+    <section class="slide" id="slide3">
+      <div class="mobile-card">
+        <div class="washi-tape-top"></div>
+        <div class="badge-pill-small">🎟️ Birthday Special Passes</div>
+        <h2 class="slide-title">Love Coupons For You! 🎁</h2>
+        <p class="slide-sub">You have to accept all 4 coupons one by one! (No skipping 😜)</p>
+
+        <div class="coupon-deck-wrap">
+          <div class="single-coupon-card" id="currentCouponCard">
+            <div class="coupon-big-icon" id="couponIcon">👑</div>
+            <h3 class="coupon-big-title" id="couponTitle">"You Win Every Argument" Pass</h3>
+            <p class="coupon-big-desc" id="couponDesc">Valid especially for today. Jo bologe woh sar aankhon par!</p>
+            
+            <button class="btn-force-accept" id="btnAcceptCoupon" onclick="acceptCurrentCoupon()">Accept Karna Hi Padega! 📌</button>
+            <div class="coupon-stamp-reveal" id="couponStamp">ACCEPTED BY BACCHI! ✅</div>
+          </div>
+          
+          <div class="coupon-progress-text" id="couponProgress">Coupon 1 of 4</div>
         </div>
+
+        <!-- Button to go to next slide (unlocks after 4 coupons) -->
+        <button class="btn-next-step" id="btnAfterCoupons" style="display: none;" onclick="goToSlide(3)">
+          Ek Zaroori Sawaal... 🥺👉
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 4: THE APOLOGY & FORGIVENESS GAME ==================== -->
+    <section class="slide" id="slide4">
+      <div class="mobile-card">
+        <div class="washi-tape-top"></div>
+        
+        <!-- Pleading Dudu GIF -->
+        <img src="https://media1.tenor.com/m/wDR4aS0xUmkAAAAC/dudu-bubu.gif" alt="Pleading Dudu" class="apology-gif-mobile" id="apologyGifMobile" />
+
+        <h2 class="slide-title" id="apologyTitleMobile">Mujhe Maaf Kardiya? 🥺👉👈</h2>
+        <p class="slide-sub" id="apologySubMobile">
+          I know maine stupid silly baat bol di thi... I am really very sorry meri jaan. Please batao na?
+        </p>
+
+        <!-- Buttons Arena -->
+        <div class="buttons-arena-mobile" id="buttonsArenaMobile">
+          <button class="btn-forgive-yes-m" id="btnYesMobile">Haan 🥰</button>
+          <button class="btn-forgive-no-m" id="btnNoMobile">Nahi 😤</button>
+        </div>
+
+        <div class="taunt-bubble-m" id="tauntBubbleMobile"></div>
+
+        <!-- Celebration Box after forgiveness -->
+        <div class="celebration-box-m" id="celebrationBoxMobile">
+          <img src="https://media.tenor.com/D6HDHJLAqb4AAAAi/dudu-bubu-dudu.gif" alt="Bubu Dudu Hug" class="celebration-gif-m" />
+          <h3 class="celebration-title-m">YAAAYYY! Meri Pyaari Bacchi! 🎉🥰</h3>
+          <p class="celebration-text-m">
+            Thank you so much for forgiving me! ❤️ I love you the most in the entire universe! 💖
+          </p>
+          <button class="btn-next-step" onclick="goToSlide(4)">Ek Letter Padh Lo 💌👉</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 5: HANDWRITTEN LOVE LETTER ==================== -->
+    <section class="slide" id="slide5">
+      <div class="mobile-card">
+        <div class="washi-tape-top"></div>
+        
+        <div class="envelope-mobile">
+          <h3 class="letter-header-m">Dearest Bacchi 💌,</h3>
+          <div class="letter-content-m">
+            <p>
+              Happy Birthday to the most adorable, caring, sleepyhead & foodie human in my life! ✨
+            </p>
+            <p>
+              I know kabhi-kabhi main dumb cheezein bol deta hoon, par my love for you will always be 10000%. 
+              Tumhari ek smile meri poori duniya theek kar deti hai.
+            </p>
+            <p>
+              May this birthday bring you infinite happiness, lots of tasty food, deep sweet naps, and zero reasons to get mad at me! 😂💖
+            </p>
+          </div>
+          <div class="letter-signature-m">
+            Forever & Always Yours,<br/>
+            Your Dummy ❤️
+          </div>
+        </div>
+
+        <button class="btn-replay-story" onclick="goToSlide(0)">🔄 Replay Surprise</button>
       </div>
     </section>
 
@@ -228,21 +191,15 @@
   <!-- TEASE MODAL POPUP ("Itni Jaldi??") -->
   <div class="tease-modal-backdrop" id="teaseModal">
     <div class="tease-modal-box">
-      <!-- Smug / Teasing Bubu GIF -->
-      <img src="https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp" alt="Teasing Bubu" class="tease-gif" />
+      <img src="https://media.tenor.com/sF1uq611JBUAAAAi/bubu-dudu-bubu.webp" alt="Teasing Bubu" class="tease-gif-m" />
       <h3 class="tease-modal-title">Arey Itni Jaldi?? 😏</h3>
       <p class="tease-modal-text">
         Itna aasan thodi tha mujhe maaf karna! 😂<br/>
-        Thoda aur nakhre toh dikhao madam! Ya sach me gussa khatam ho gaya? 😜
+        Thoda aur nakhre toh dikhao meri bacchi! 😜
       </p>
       <button class="btn-real-forgive" id="btnRealForgive">Acha Sach Me 100% Maaf Kiya! ❤️</button>
     </div>
   </div>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <p>Made with endless love & cute Bubu-Dudu hugs for the best girl in the world! <span>💖</span></p>
-  </footer>
 
   <script src="script.js"></script>
 </body>
