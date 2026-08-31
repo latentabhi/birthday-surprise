@@ -466,81 +466,102 @@ showCoupon(0);
 
 
 // ─── 7. SLIDE 4: OPTIMIZED EVASIVE "NAHI" BUTTON & APOLOGY GAME ───
-(function initApologyGame() {
-  const btnYes = document.getElementById('btnYesMobile');
+let noCount = 0;
+let hasTeasedOnce = false;
+let isThrottled = false;
+let currentZoneIndex = -1;
+
+const escapePositions = [
+  { x: -95, y: -30, rot: -8 },
+  { x: 95, y: 30, rot: 8 },
+  { x: -95, y: 30, rot: 6 },
+  { x: 95, y: -30, rot: -6 },
+  { x: -105, y: 0, rot: -10 },
+  { x: 105, y: 0, rot: 10 },
+  { x: 0, y: -36, rot: 4 },
+  { x: 0, y: 36, rot: -4 }
+];
+
+const taunts = [
+  'Arey pakad ke dikha bhutki tu pehle! 😏',
+  'Nahi wala button bas showpiece hai! 😜',
+  'Dekho bechara ro raha hai kone me jaake 😞',
+  'Kitna bhav khaaogi aaj? Birthday hai reham kar bacchi! 🥺👉👈',
+  'Haath dukh jayenge tap karte karte, maan jao na! 😂',
+  'Main chocolate aur momos bhi khilaunga pakka! 🥺',
+  'Nahi bolne ka koi option hi nahi hai! 💕',
+  'Bas ab Haan pe tap karo meri betu! 🥰',
+];
+
+function evadeNoButton(e) {
+  if (e && e.cancelable) e.preventDefault();
+  if (isThrottled) return;
+  isThrottled = true;
+  setTimeout(() => { isThrottled = false; }, 90);
+
   const btnNo = document.getElementById('btnNoMobile');
+  const btnYes = document.getElementById('btnYesMobile');
   const tauntBubble = document.getElementById('tauntBubbleMobile');
-  const buttonsArena = document.getElementById('buttonsArenaMobile');
-  const teaseModal = document.getElementById('teaseModal');
-  const btnRealForgive = document.getElementById('btnRealForgive');
-  const celebrationBox = document.getElementById('celebrationBoxMobile');
-  const apologyGif = document.getElementById('apologyGifMobile');
-  const apologyTitle = document.getElementById('apologyTitleMobile');
-  const apologySub = document.getElementById('apologySubMobile');
 
-  if (!btnYes || !btnNo) return;
+  if (!btnNo || !btnYes) return;
 
-  // Set initial position for Nahi button next to Haan
-  btnNo.style.transform = 'translate(78px, 0px)';
-
-  let noCount = 0;
-  let hasTeasedOnce = false;
-  let isThrottled = false;
-  let currentZoneIndex = -1;
-
-  const escapePositions = [
-    { x: -95, y: -30, rot: -8 },
-    { x: 95, y: 30, rot: 8 },
-    { x: -95, y: 30, rot: 6 },
-    { x: 95, y: -30, rot: -6 },
-    { x: -105, y: 0, rot: -10 },
-    { x: 105, y: 0, rot: 10 },
-    { x: 0, y: -36, rot: 4 },
-    { x: 0, y: 36, rot: -4 }
-  ];
-
-  const taunts = [
-    'Arey pakad ke dikha bhutki tu pehle! 😏',
-    'Nahi wala button bas showpiece hai! 😜',
-    'Dekho bechara ro raha hai kone me jaake 😞',
-    'Kitna bhav khaaogi aaj? Birthday hai reham kar bacchi! 🥺👉👈',
-    'Haath dukh jayenge tap karte karte, maan jao na! 😂',
-    'Main chocolate aur momos bhi khilaunga pakka! 🥺',
-    'Nahi bolne ka koi option hi nahi hai! 💕',
-    'Bas ab Haan pe tap karo meri betu! 🥰',
-  ];
-
-  function evadeNoButton(e) {
-    if (e && e.cancelable) e.preventDefault();
-    if (isThrottled) return;
-    isThrottled = true;
-    setTimeout(() => { isThrottled = false; }, 90);
-
-    noCount++;
-    if (tauntBubble) {
-      tauntBubble.textContent = taunts[Math.min(noCount - 1, taunts.length - 1)];
-    }
-
-    // Pick a new zone different from currentZoneIndex
-    let nextZone = Math.floor(Math.random() * escapePositions.length);
-    if (nextZone === currentZoneIndex) {
-      nextZone = (nextZone + 1) % escapePositions.length;
-    }
-    currentZoneIndex = nextZone;
-
-    const pos = escapePositions[currentZoneIndex];
-    btnNo.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${pos.rot}deg) scale(0.92)`;
-    btnNo.style.backgroundColor = '#fff0f5';
-
-    // Gently scale Yes button
-    const scales = [1.08, 1.15, 1.22, 1.28];
-    const targetScale = scales[Math.min(noCount - 1, scales.length - 1)];
-    btnYes.style.transform = `scale(${targetScale})`;
-
-    CuteAudio.playCutePop();
+  noCount++;
+  if (tauntBubble) {
+    tauntBubble.textContent = taunts[Math.min(noCount - 1, taunts.length - 1)];
   }
 
-  // Support all interaction types smoothly on both mobile & desktop
+  let nextZone = Math.floor(Math.random() * escapePositions.length);
+  if (nextZone === currentZoneIndex) {
+    nextZone = (nextZone + 1) % escapePositions.length;
+  }
+  currentZoneIndex = nextZone;
+
+  const pos = escapePositions[currentZoneIndex];
+  btnNo.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${pos.rot}deg) scale(0.92)`;
+  btnNo.style.backgroundColor = '#fff0f5';
+
+  const scales = [1.08, 1.15, 1.22, 1.28];
+  const targetScale = scales[Math.min(noCount - 1, scales.length - 1)];
+  btnYes.style.transform = `scale(${targetScale})`;
+
+  CuteAudio.playCutePop();
+}
+
+function triggerFinalCelebration() {
+  const buttonsArena = document.getElementById('buttonsArenaMobile');
+  const tauntBubble = document.getElementById('tauntBubbleMobile');
+  const apologyTitle = document.getElementById('apologyTitleMobile');
+  const apologySub = document.getElementById('apologySubMobile');
+  const apologyGif = document.getElementById('apologyGifMobile');
+  const celebrationBox = document.getElementById('celebrationBoxMobile');
+
+  if (buttonsArena) buttonsArena.style.display = 'none';
+  if (tauntBubble) tauntBubble.style.display = 'none';
+  if (apologyTitle) apologyTitle.style.display = 'none';
+  if (apologySub) apologySub.style.display = 'none';
+
+  if (apologyGif) {
+    apologyGif.src = 'https://media1.tenor.com/m/hlr3kptkdu4AAAAC/bubu-dudu.gif';
+  }
+
+  if (celebrationBox) celebrationBox.style.display = 'block';
+
+  ConfettiEngine.shoot(120);
+  setTimeout(() => ConfettiEngine.shoot(100), 500);
+  setTimeout(() => ConfettiEngine.shoot(120), 1100);
+
+  CuteAudio.playCutePop();
+}
+
+(function initApologyListeners() {
+  const btnYes = document.getElementById('btnYesMobile');
+  const btnNo = document.getElementById('btnNoMobile');
+  const teaseModal = document.getElementById('teaseModal');
+  const btnRealForgive = document.getElementById('btnRealForgive');
+
+  if (!btnYes || !btnNo) return;
+  btnNo.style.transform = 'translate(78px, 0px)';
+
   btnNo.addEventListener('pointerenter', evadeNoButton);
   btnNo.addEventListener('touchstart', evadeNoButton, { passive: false });
   btnNo.addEventListener('pointerdown', evadeNoButton);
@@ -549,7 +570,7 @@ showCoupon(0);
   btnYes.addEventListener('click', () => {
     if (!hasTeasedOnce) {
       hasTeasedOnce = true;
-      teaseModal.classList.add('active');
+      if (teaseModal) teaseModal.classList.add('active');
       CuteAudio.playCutePop();
     } else {
       triggerFinalCelebration();
@@ -558,27 +579,74 @@ showCoupon(0);
 
   if (btnRealForgive) {
     btnRealForgive.addEventListener('click', () => {
-      teaseModal.classList.remove('active');
+      if (teaseModal) teaseModal.classList.remove('active');
       triggerFinalCelebration();
     });
   }
-
-  function triggerFinalCelebration() {
-    buttonsArena.style.display = 'none';
-    if (tauntBubble) tauntBubble.style.display = 'none';
-    if (apologyTitle) apologyTitle.style.display = 'none';
-    if (apologySub) apologySub.style.display = 'none';
-
-    if (apologyGif) {
-      apologyGif.src = 'https://media1.tenor.com/m/hlr3kptkdu4AAAAC/bubu-dudu.gif';
-    }
-
-    if (celebrationBox) celebrationBox.style.display = 'block';
-
-    ConfettiEngine.shoot(120);
-    setTimeout(() => ConfettiEngine.shoot(100), 500);
-    setTimeout(() => ConfettiEngine.shoot(120), 1100);
-
-    CuteAudio.playCutePop();
-  }
 })();
+
+
+// ─── 8. REPLAY STORY: FULL STATE RESET ───
+window.restartStory = function () {
+  // 1. Reset Slide 1: Gussa Meter & Button back to 99%
+  gussaStep = 0;
+  const btnCoolDown = document.getElementById('btnCoolDown');
+  const gussaVal = document.getElementById('gussaVal');
+  const gussaFill = document.getElementById('gussaFill');
+  const gussaCaption = document.getElementById('gussaCaption');
+  const heroBubuImg = document.getElementById('heroBubuImg');
+
+  if (btnCoolDown) {
+    btnCoolDown.classList.remove('btn-unlocked-next');
+    btnCoolDown.textContent = gussaStepsData[0].btnText; // "Gussa Thanda Karlo Aap🙃"
+  }
+  if (gussaVal) gussaVal.textContent = gussaStepsData[0].valText; // "99% (Baapre! Itna Khatarnak😣)"
+  if (gussaFill) gussaFill.style.width = gussaStepsData[0].percent + '%'; // "99%"
+  if (gussaCaption) gussaCaption.textContent = gussaStepsData[0].caption;
+  if (heroBubuImg) {
+    heroBubuImg.src = 'https://media.tenor.com/Qj40AdvEqKsAAAAi/bubu-happy.gif';
+  }
+
+  // 2. Reset Slide 2: Polaroids
+  pIndex = 0;
+  renderPolaroid();
+
+  // 3. Reset Slide 3: Coupons
+  cIndex = 0;
+  showCoupon(0);
+  const btnAfterCoupons = document.getElementById('btnAfterCoupons');
+  if (btnAfterCoupons) btnAfterCoupons.style.display = 'none';
+
+  // 4. Reset Slide 4: Apology & Tease Game
+  const buttonsArena = document.getElementById('buttonsArenaMobile');
+  const tauntBubble = document.getElementById('tauntBubbleMobile');
+  const celebrationBox = document.getElementById('celebrationBoxMobile');
+  const apologyTitle = document.getElementById('apologyTitleMobile');
+  const apologySub = document.getElementById('apologySubMobile');
+  const apologyGif = document.getElementById('apologyGifMobile');
+  const btnYes = document.getElementById('btnYesMobile');
+  const btnNo = document.getElementById('btnNoMobile');
+  const teaseModal = document.getElementById('teaseModal');
+
+  if (buttonsArena) buttonsArena.style.display = 'flex';
+  if (tauntBubble) {
+    tauntBubble.style.display = 'block';
+    tauntBubble.textContent = '';
+  }
+  if (apologyTitle) apologyTitle.style.display = 'block';
+  if (apologySub) apologySub.style.display = 'block';
+  if (celebrationBox) celebrationBox.style.display = 'none';
+  if (apologyGif) apologyGif.src = 'https://media1.tenor.com/m/wDR4aS0xUmkAAAAC/dudu-bubu.gif';
+  if (btnYes) btnYes.style.transform = 'scale(1)';
+  if (btnNo) {
+    btnNo.style.transform = 'translate(78px, 0px)';
+    btnNo.style.backgroundColor = '#ffffff';
+  }
+  if (teaseModal) teaseModal.classList.remove('active');
+  noCount = 0;
+  hasTeasedOnce = false;
+  currentZoneIndex = -1;
+
+  // 5. Navigate cleanly back to Slide 1
+  goToSlide(0);
+};
