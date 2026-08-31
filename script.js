@@ -259,10 +259,10 @@ let gussaStep = 0; // 0 -> 1 -> 2 -> 3 -> 4 (Finished)
 const gussaStepsData = [
   // Initial state (Step 0)
   {
-    percent: 100,
-    valText: '100% (Extreme Danger 🚨)',
-    caption: 'Arey re! Itna zyada gussa?!',
-    btnText: 'Thoda Rahem Karo Bacchi🥺'
+    percent: 99,
+    valText: '99% (Baapre! Itna Khatarnak😣)',
+    caption: 'Kya karoge iss bacche pe itna gussa karke 🥺',
+    btnText: 'Gussa Thanda Karlo Aap🙃'
   },
   // After Tap 1 (Step 1)
   {
@@ -276,7 +276,7 @@ const gussaStepsData = [
     percent: 50,
     valText: '50% (Pout Mode Activated 😤)',
     caption: 'abhi bhi gussa bacha hai...lagta hai momos aur ice-cream khilane padenge! 🥟🍦',
-    btnText: 'Kam kar lo na betu 😣'
+    btnText: 'Kam kar lo na betu 😣 '
   },
   // After Tap 3 (Step 3)
   {
@@ -395,7 +395,7 @@ const coupons = [
   {
     icon: '👑',
     title: 'Chalo Aap Jiti',
-    desc: 'Valid especially for today. Jo bologe woh sar aankhon par!'
+    desc: 'Valid especially for today. Jo bologe woh sar aankhon par! Koi behes nahi.'
   },
   {
     icon: '🫂',
@@ -431,14 +431,8 @@ function showCoupon(index) {
   descEl.textContent = item.desc;
   if (progressEl) progressEl.textContent = `Coupon ${index + 1} of ${coupons.length}`;
 
-  if (btnAccept) {
-    btnAccept.style.display = 'block';
-    btnAccept.textContent = 'Aapke Liye 🤗';
-  }
-  if (stampEl) {
-    stampEl.style.display = 'none';
-    stampEl.textContent = 'Maan liya na 😏';
-  }
+  if (btnAccept) btnAccept.style.display = 'block';
+  if (stampEl) stampEl.style.display = 'none';
   cardEl.classList.remove('stamped');
 }
 
@@ -595,7 +589,7 @@ function triggerFinalCelebration() {
 
 // ─── 8. REPLAY STORY: FULL STATE RESET ───
 window.restartStory = function () {
-  // 1. Reset Slide 1: Gussa Meter & Button back to 100%
+  // 1. Reset Slide 1: Gussa Meter & Button back to 99%
   gussaStep = 0;
   const btnCoolDown = document.getElementById('btnCoolDown');
   const gussaVal = document.getElementById('gussaVal');
@@ -605,11 +599,11 @@ window.restartStory = function () {
 
   if (btnCoolDown) {
     btnCoolDown.classList.remove('btn-unlocked-next');
-    btnCoolDown.textContent = gussaStepsData[0].btnText; // "Thoda Rahem Karo Bacchi🥺"
+    btnCoolDown.textContent = gussaStepsData[0].btnText; // "Gussa Thanda Karlo Aap🙃"
   }
-  if (gussaVal) gussaVal.textContent = gussaStepsData[0].valText; // "100% (Extreme Danger 🚨)"
-  if (gussaFill) gussaFill.style.width = gussaStepsData[0].percent + '%'; // "100%"
-  if (gussaCaption) gussaCaption.textContent = gussaStepsData[0].caption; // "Arey re! Itna zyada gussa?!"
+  if (gussaVal) gussaVal.textContent = gussaStepsData[0].valText; // "99% (Baapre! Itna Khatarnak😣)"
+  if (gussaFill) gussaFill.style.width = gussaStepsData[0].percent + '%'; // "99%"
+  if (gussaCaption) gussaCaption.textContent = gussaStepsData[0].caption; // "Kya karoge iss bacche pe itna gussa karke 🥺"
   if (heroBubuImg) {
     heroBubuImg.src = 'https://media.tenor.com/Qj40AdvEqKsAAAAi/bubu-happy.gif';
   }
