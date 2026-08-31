@@ -465,7 +465,7 @@ window.acceptCurrentCoupon = function () {
 showCoupon(0);
 
 
-// ─── 7. SLIDE 4: FORGIVENESS GAME WITH EVADING "NAHI" & "ITNI JALDI?!" TEASE ───
+// ─── 7. SLIDE 4: OPTIMIZED EVASIVE "NAHI" BUTTON & APOLOGY GAME ───
 (function initApologyGame() {
   const btnYes = document.getElementById('btnYesMobile');
   const btnNo = document.getElementById('btnNoMobile');
@@ -480,8 +480,24 @@ showCoupon(0);
 
   if (!btnYes || !btnNo) return;
 
+  // Set initial position for Nahi button next to Haan
+  btnNo.style.transform = 'translate(78px, 0px)';
+
   let noCount = 0;
   let hasTeasedOnce = false;
+  let isThrottled = false;
+  let currentZoneIndex = -1;
+
+  const escapePositions = [
+    { x: -95, y: -30, rot: -8 },
+    { x: 95, y: 30, rot: 8 },
+    { x: -95, y: 30, rot: 6 },
+    { x: 95, y: -30, rot: -6 },
+    { x: -105, y: 0, rot: -10 },
+    { x: 105, y: 0, rot: 10 },
+    { x: 0, y: -36, rot: 4 },
+    { x: 0, y: 36, rot: -4 }
+  ];
 
   const taunts = [
     'Arey pakad ke dikha bhutki tu pehle! 😏',
@@ -495,28 +511,39 @@ showCoupon(0);
   ];
 
   function evadeNoButton(e) {
-    if (e) e.preventDefault();
+    if (e && e.cancelable) e.preventDefault();
+    if (isThrottled) return;
+    isThrottled = true;
+    setTimeout(() => { isThrottled = false; }, 90);
+
     noCount++;
-    tauntBubble.textContent = taunts[Math.min(noCount - 1, taunts.length - 1)];
+    if (tauntBubble) {
+      tauntBubble.textContent = taunts[Math.min(noCount - 1, taunts.length - 1)];
+    }
 
-    const maxDeltaX = 90;
-    const maxDeltaY = 40;
+    // Pick a new zone different from currentZoneIndex
+    let nextZone = Math.floor(Math.random() * escapePositions.length);
+    if (nextZone === currentZoneIndex) {
+      nextZone = (nextZone + 1) % escapePositions.length;
+    }
+    currentZoneIndex = nextZone;
 
-    const randomX = (Math.random() * 2 - 1) * maxDeltaX;
-    const randomY = (Math.random() * 2 - 1) * maxDeltaY;
-    const randomRot = (Math.random() - 0.5) * 25;
+    const pos = escapePositions[currentZoneIndex];
+    btnNo.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${pos.rot}deg) scale(0.92)`;
+    btnNo.style.backgroundColor = '#fff0f5';
 
-    btnNo.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRot}deg) scale(0.9)`;
-    btnNo.style.background = '#ffe5ec';
-
-    const currentScale = 1 + Math.min(noCount * 0.05, 0.25);
-    btnYes.style.transform = `scale(${currentScale})`;
+    // Gently scale Yes button
+    const scales = [1.08, 1.15, 1.22, 1.28];
+    const targetScale = scales[Math.min(noCount - 1, scales.length - 1)];
+    btnYes.style.transform = `scale(${targetScale})`;
 
     CuteAudio.playCutePop();
   }
 
-  btnNo.addEventListener('mouseenter', evadeNoButton);
-  btnNo.addEventListener('touchstart', evadeNoButton);
+  // Support all interaction types smoothly on both mobile & desktop
+  btnNo.addEventListener('pointerenter', evadeNoButton);
+  btnNo.addEventListener('touchstart', evadeNoButton, { passive: false });
+  btnNo.addEventListener('pointerdown', evadeNoButton);
   btnNo.addEventListener('click', evadeNoButton);
 
   btnYes.addEventListener('click', () => {
@@ -538,15 +565,15 @@ showCoupon(0);
 
   function triggerFinalCelebration() {
     buttonsArena.style.display = 'none';
-    tauntBubble.style.display = 'none';
-    apologyTitle.style.display = 'none';
-    apologySub.style.display = 'none';
+    if (tauntBubble) tauntBubble.style.display = 'none';
+    if (apologyTitle) apologyTitle.style.display = 'none';
+    if (apologySub) apologySub.style.display = 'none';
 
     if (apologyGif) {
       apologyGif.src = 'https://media1.tenor.com/m/hlr3kptkdu4AAAAC/bubu-dudu.gif';
     }
 
-    celebrationBox.style.display = 'block';
+    if (celebrationBox) celebrationBox.style.display = 'block';
 
     ConfettiEngine.shoot(120);
     setTimeout(() => ConfettiEngine.shoot(100), 500);

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Gaegu:wght@700&family=Patrick+Hand&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=3.3" />
+  <link rel="stylesheet" href="style.css?v=3.4" />
 
   <style>
     /* ==========================================================================
@@ -147,6 +147,7 @@
       align-items: center;
       gap: 0.35rem;
       transition: all 0.2s ease;
+      touch-action: manipulation;
     }
 
     .btn-music-pill.playing {
@@ -202,7 +203,7 @@
       background: var(--bg-card);
       border-radius: var(--radius-xl);
       border: 3px solid #ffe1e8;
-      padding: 1.5rem 1.15rem;
+      padding: 1.4rem 1.1rem;
       width: 100%;
       max-width: 420px;
       box-shadow: var(--shadow-cute);
@@ -252,6 +253,8 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      touch-action: manipulation;
+      user-select: none;
       animation: pulseNext 2s infinite;
     }
 
@@ -280,8 +283,8 @@
     }
 
     .hero-bubu-img {
-      width: 130px;
-      height: 130px;
+      width: 125px;
+      height: 125px;
       object-fit: contain;
       filter: drop-shadow(0 6px 12px rgba(255, 101, 132, 0.25));
       animation: cuteBounce 3s ease-in-out infinite;
@@ -294,7 +297,7 @@
 
     .slide-title {
       font-family: var(--font-hand);
-      font-size: clamp(2rem, 6vw, 2.7rem);
+      font-size: clamp(1.9rem, 5.8vw, 2.6rem);
       color: var(--primary-pink);
       line-height: 1.1;
       margin: 0.3rem 0 0.2rem 0;
@@ -305,7 +308,7 @@
       font-size: 1.05rem;
       color: var(--text-muted);
       line-height: 1.35;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
     .gussa-box-mobile {
@@ -340,6 +343,7 @@
       overflow: hidden;
       border: 1.5px solid #ffccd5;
       cursor: pointer;
+      touch-action: manipulation;
     }
 
     .gussa-fill-mobile {
@@ -374,6 +378,8 @@
       width: 100%;
       transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
       box-shadow: 0 4px 12px rgba(255, 101, 132, 0.15);
+      touch-action: manipulation;
+      user-select: none;
     }
 
     .btn-cool-down-mobile:active {
@@ -460,6 +466,7 @@
       padding: 0.3rem 0.85rem;
       border-radius: 999px;
       cursor: pointer;
+      touch-action: manipulation;
     }
 
     .polaroid-count-badge {
@@ -524,6 +531,8 @@
       width: 100%;
       box-shadow: 0 6px 16px rgba(255, 71, 126, 0.3);
       transition: all 0.2s ease;
+      touch-action: manipulation;
+      user-select: none;
     }
 
     .btn-force-accept:active {
@@ -556,64 +565,72 @@
       margin-top: 0.4rem;
     }
 
+    /* ─── SLIDE 4: OPTIMIZED MOBILE APOLOGY & EVASIVE BUTTON ─── */
     .apology-gif-mobile {
-      width: 135px;
-      height: 135px;
+      width: 125px;
+      height: 125px;
       object-fit: contain;
       filter: drop-shadow(0 4px 10px rgba(255, 101, 132, 0.2));
       margin: 0.1rem auto;
     }
 
     .buttons-arena-mobile {
+      position: relative;
+      width: 100%;
+      min-height: 105px;
+      margin-top: 0.6rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1.2rem;
-      width: 100%;
-      min-height: 85px;
-      position: relative;
-      margin-top: 0.6rem;
     }
 
     .btn-forgive-yes-m {
-      background: linear-gradient(135deg, #ff6584, #ff477e);
+      background: linear-gradient(135deg, #ff477e, #ff6584);
       color: white;
       font-family: var(--font-hand);
       font-size: 1.65rem;
       font-weight: 700;
-      padding: 0.6rem 1.7rem;
+      padding: 0.65rem 1.9rem;
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(255, 71, 126, 0.35);
-      transition: all 0.25s ease;
-      z-index: 20;
+      box-shadow: 0 8px 22px rgba(255, 71, 126, 0.4);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+      z-index: 10;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .btn-forgive-no-m {
-      background: white;
+      position: absolute;
+      background: #ffffff;
       color: #ff477e;
       font-family: var(--font-hand);
-      font-size: 1.55rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      padding: 0.6rem 1.5rem;
+      padding: 0.55rem 1.5rem;
       border-radius: 999px;
       border: 2px dashed #ff477e;
       cursor: pointer;
       box-shadow: var(--shadow-sticker);
-      transition: transform 0.15s ease, background-color 0.2s ease;
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
       z-index: 25;
+      touch-action: manipulation;
       user-select: none;
+      -webkit-user-select: none;
+      white-space: nowrap;
     }
 
     .taunt-bubble-m {
-      margin-top: 0.5rem;
-      min-height: 1.8rem;
+      margin-top: 0.4rem;
+      min-height: 2.2rem;
       font-family: var(--font-doodle);
       font-size: 1.1rem;
       font-weight: 700;
       color: #ff3366;
       line-height: 1.25;
+      transition: all 0.2s ease;
     }
 
     .celebration-box-m {
@@ -624,8 +641,8 @@
     }
 
     .celebration-gif-m {
-      width: 145px;
-      height: 145px;
+      width: 140px;
+      height: 140px;
       object-fit: contain;
       filter: drop-shadow(0 6px 14px rgba(255, 101, 132, 0.3));
     }
@@ -718,6 +735,7 @@
       cursor: pointer;
       width: 100%;
       box-shadow: 0 6px 16px rgba(42, 157, 143, 0.35);
+      touch-action: manipulation;
     }
 
     .envelope-mobile {
@@ -773,6 +791,7 @@
       border-radius: 999px;
       cursor: pointer;
       margin-top: 0.8rem;
+      touch-action: manipulation;
     }
   </style>
 </head>
@@ -904,7 +923,7 @@
           laado. Maaf kardo ab?
         </p>
 
-        <!-- Buttons Arena -->
+        <!-- Buttons Arena (Optimized with responsive dodge physics) -->
         <div class="buttons-arena-mobile" id="buttonsArenaMobile">
           <button class="btn-forgive-yes-m" id="btnYesMobile">Haan 🥰</button>
           <button class="btn-forgive-no-m" id="btnNoMobile">Nahi 😤</button>
