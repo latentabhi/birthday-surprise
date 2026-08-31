@@ -275,7 +275,7 @@ const gussaStepsData = [
   {
     percent: 50,
     valText: '50% (Pout Mode Activated 😤)',
-    caption: 'abhi bhi gussa bacha hai...lagta hai momos aur ice-cream khilane padenge! 🥟🍦',
+    caption: 'abhi bhi bahut gussa bacha hua hai...😣',
     btnText: 'Kam kar lo na betu 😣 '
   },
   // After Tap 3 (Step 3)
@@ -290,7 +290,7 @@ const gussaStepsData = [
     percent: 0,
     valText: '0% (Totally Calm & In Love 🍯🥰)',
     caption: 'Chalo Shaant toh hue aap 💖',
-    btnText: 'HEHE, meri cutiepie'
+    btnText: 'HEHE, meri cutiepie❣️'
   }
 ];
 
