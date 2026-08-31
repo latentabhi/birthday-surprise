@@ -253,8 +253,46 @@ window.goToSlide = function (targetIndex) {
 };
 
 
-// ─── 4. SLIDE 1: UNIFIED TRANSFORMING GUSSA METER BUTTON ───
-let gussaLevel = 99;
+// ─── 4. SLIDE 1: DISTINCT STEP-BY-STEP GUSSA METER (EVERY TAP IS UNIQUE!) ───
+let gussaStep = 0; // 0 -> 1 -> 2 -> 3 -> 4 (Finished)
+
+const gussaStepsData = [
+  // Initial state (Step 0)
+  {
+    percent: 100,
+    valText: '100% (Extreme Danger 🚨)',
+    caption: 'Arey re! Itna zyada gussa?! Jaldi se niche tap karke thanda karo! 👇',
+    btnText: '🧊 Gussa Thanda Karo (Tap Here!)'
+  },
+  // After Tap 1 (Step 1)
+  {
+    percent: 75,
+    valText: '75% (Danger Zone ⚠️)',
+    caption: 'Thoda sa kam hua... par abhi bhi aankhein laal hain! Ek baar aur tap karo! 🧊',
+    btnText: '🧊 Aur Thanda Karo (Tap 2/4)'
+  },
+  // After Tap 2 (Step 2)
+  {
+    percent: 50,
+    valText: '50% (Pout Mode Activated 😤)',
+    caption: '50% gussa bacha hai... lagta hai momos aur ice-cream khilane padenge! 🥟🍦',
+    btnText: '🧊 Thoda Aur Dabao (Tap 3/4)'
+  },
+  // After Tap 3 (Step 3)
+  {
+    percent: 25,
+    valText: '25% (Almost Smiling 😊)',
+    caption: 'Arey waah! Almost shaant! Bas ek pyaari si smile bachi hai meri bacchi! 🌸',
+    btnText: '🧊 Ek Aakhri Tap Karo! (Tap 4/4) 🌸'
+  },
+  // After Tap 4 (Step 4 — Finished!)
+  {
+    percent: 0,
+    valText: '0% (Totally Calm & In Love 🍯🥰)',
+    caption: '🎉 YAAAY! Gussa 0% Ho Gaya! You are officially ready for the surprises! 💖',
+    btnText: '🎉 Gussa 0%! Aage Dekho 👉'
+  }
+];
 
 window.handleGussaClick = function () {
   const btn = document.getElementById('btnCoolDown');
@@ -263,43 +301,29 @@ window.handleGussaClick = function () {
   const gussaCaption = document.getElementById('gussaCaption');
   const heroBubuImg = document.getElementById('heroBubuImg');
 
-  if (gussaLevel > 0) {
-    // Decrease anger step
-    gussaLevel = Math.max(0, gussaLevel - 25);
-    gussaFill.style.width = gussaLevel + '%';
+  if (gussaStep < 4) {
+    gussaStep++;
+    const state = gussaStepsData[gussaStep];
+
+    gussaFill.style.width = state.percent + '%';
+    gussaVal.textContent = state.valText;
+    gussaCaption.textContent = state.caption;
+    btn.textContent = state.btnText;
 
     CuteAudio.playCutePop();
     ConfettiEngine.shoot(25);
 
-    if (gussaLevel >= 75) {
-      gussaVal.textContent = '75% (High Alert ⚠️)';
-      gussaCaption.textContent = 'Thoda kam hua... par abhi bhi dangerous hai! Ek baar aur tap karo! 🧊';
-      btn.textContent = '🧊 Aur Thanda Karo (Tap Again!)';
-    } else if (gussaLevel >= 50) {
-      gussaVal.textContent = '50% (Cooling Down 🍧)';
-      gussaCaption.textContent = '50% gussa bacha hai... momos ya ice-cream khilaun kya? 🍦';
-      btn.textContent = '🧊 Thoda Aur Dabaao (50% Left)';
-    } else if (gussaLevel > 0) {
-      gussaVal.textContent = '25% (Almost Sweet 🌸)';
-      gussaCaption.textContent = 'Almost shaant! Bas ek smile bachi hai meri bacchi 😊';
-      btn.textContent = '🧊 Ek Last Baar Tap Karo! 🌸';
-    } else {
-      // 0% REACHED — Transform button into "Aage Dekho 👉"
-      gussaVal.textContent = '0% (Totally Calm & Sweet 🍯)';
-      gussaCaption.textContent = '🎉 YAAAY! Gussa 0% Ho Gaya! Now ready for surprises! 🥰';
-      
-      btn.textContent = '🎉 Gussa 0%! Aage Dekho 👉';
+    if (gussaStep === 4) {
+      // 0% Unlocked!
       btn.classList.add('btn-unlocked-next');
-
       if (heroBubuImg) {
         heroBubuImg.src = 'https://media1.tenor.com/m/q_Sav516k1IAAAAC/bubu-dudu-dudu-dancing.gif';
       }
-      
       ConfettiEngine.shoot(80);
       CuteAudio.playCutePop();
     }
   } else {
-    // When clicked after reaching 0%, navigate directly to Slide 2!
+    // Navigates smoothly to Slide 2!
     goToSlide(1);
   }
 };
